@@ -86,6 +86,8 @@
     <Content Include="AscnesionESports\secret_settings.py.template">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Procfile" />
+    <Content Include="Procfile.windows" />
     <Content Include="requirements.txt" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\bootstrap.css" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\bootstrap.min.css" />
