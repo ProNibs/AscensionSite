@@ -1,0 +1,24 @@
+﻿{% extends "AscensionESports_Baseline/layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <h2>{{ title }}</h2>
+
+            <p>Please put info about your desired team name and your players.</p>
+    
+            <form action=" " method="post">
+                {% csrf_token %}
+                {{ form.as_ul }}
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey="6LctL14UAAAAAJbgKRv7EfgG3sMbX2EtNzcIkNWV"></div>
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+        <div class="col-xs-5"></div>
+    </div>
+</div>
+{% endblock %}

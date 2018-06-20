@@ -1,0 +1,22 @@
+﻿{% extends "AscensionESports_Baseline/layout.html" %}
+
+{% block content %}
+<header>
+<style>
+    .tab { margin-left: 40px }
+</style>
+</header>
+<h2>{{ title }}</h2>
+
+{% for p in posts %}
+        <h3 class="tab">{{ p.title }}</h3>
+        <p class="tab"> {{p.body}}</p>
+        <p class="tab"><small>Written by {{p.author}} on {{p.date}}</small></p>
+    <hr class="tab" />
+
+{% empty %}
+    <h3 class="tab"> No news here :(</h3>
+{% endfor %}
+
+
+{% endblock %}

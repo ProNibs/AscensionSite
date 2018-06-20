@@ -1,0 +1,52 @@
+﻿{% extends "AscensionESports_Baseline/layout.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<h2>{{ title }}</h2>
+
+{% for item in query_results %}
+
+{% if forloop.counter == 1 or forloop.counter == 6 %}
+    <div class="row">
+        <div class="col-sm-5ths">
+{% else %}
+        <div class="col-sm-5ths">
+{% endif %}
+        <span>{{ item.team_name }}</span>
+                <ul class="list-unstyled">
+                    <div class="row">
+                    <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Top_icon.png' %}" width="15" height="15" alt="Top" />{{ item.top_laner }} </li>
+                    <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Jungle_icon.png' %}" width="15" height="15" alt="Jgl" />{{ item.jungler }} </li>
+                    </div><div class="row">
+                    <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Middle_icon.png' %}" width="15" height="15" alt="Mid" />{{ item.mid_laner }} </li>
+                    <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Bottom_icon.png' %}" width="15" height="15" alt="Bot" />{{ item.ad_carry }} </li>
+                    </div><div class="row">
+                    <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Support_icon.png' %}" width="15" height="15" alt="Sup" />{{ item.support }} </li>
+                    
+                    {% if item.substitute1 != '' %}
+                    <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute1 }}</li>
+                        {% if item.substitute2 != '' %}
+                        </div><div class="row">
+                        <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute2 }}</li>
+                        {% endif %}
+                            {% if item.substitute3 != '' %}
+                            <li class="col-md-6 text-nowrap""><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute3 }}</li>
+                            {% endif %}
+                    {% endif %}
+
+                    </div>
+                    <div class="row"><li class="col-md-12 text-nowrap"><a href="{{ item.getOPGGLink }}" target="_blank" class="btn btn-info btn-sm" role="button">Scout the team.</a></li> </div>
+                </ul>
+        </div>
+    {% if forloop.counter == 5 or forloop.counter == 10 %}
+    </div>
+    {% endif %}
+
+{% empty %}
+    <p>There aren't any teams yet! :(</p>
+{% endfor %}
+
+
+{% endblock %}
