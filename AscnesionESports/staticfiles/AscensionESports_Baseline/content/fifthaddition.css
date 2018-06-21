@@ -38,6 +38,15 @@
     white-space: nowrap;
 }
 
-.nav {
+.navbar-nav {
+    margin: 15px 10px 1px 1px;
+}
+
+.nav > li > a {
     padding: 5px 5px;
+}
+
+body {
+    background: url("landing-page_50.png") 50% 50% no-repeat fixed;
+    background-size: contain;
 }

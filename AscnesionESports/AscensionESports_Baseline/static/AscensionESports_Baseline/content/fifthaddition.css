@@ -1,3 +1,20 @@
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.navbar-nav {
+    margin: 15px 10px 1px 1px;
+}
+
+.nav > li > a {
+    padding: 5px 5px;
+}
+
+body {
+    background: url("landing-page_50.png") 50% 50% no-repeat fixed;
+    background-size: contain;
+}
+
 .col-xs-5ths,
 .col-sm-5ths,
 .col-md-5ths,
@@ -34,24 +51,3 @@
     }
 }
 
-.text-nowrap {
-    white-space: nowrap;
-}
-
-.navbar-nav {
-    margin: 15px 10px 1px 1px;
-}
-
-.nav > li > a {
-    padding: 5px 5px;
-}
-
-body {
-    background: url("landing-page_50.png") 50% 50% no-repeat fixed;
-    background-size: contain;
-    /*
-        Dragon: #268B4C
-        Elder:  #A0410F
-        Baron:  #4B0082
-    */
-}
