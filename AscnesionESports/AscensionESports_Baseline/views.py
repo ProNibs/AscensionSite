@@ -213,7 +213,15 @@ def dragon_league_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/Thanks')
+            return render(
+                        request, 
+                        'AscensionESports_Baseline/thanks.html', 
+                        {
+                            'background': getDragonBackground(),
+                            'color': getDragonColor(),
+                            'title': 'You have signed up for Dragon League!',
+                            'year': datetime.now().year,
+                        })
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -241,7 +249,15 @@ def elder_league_solo_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/Thanks')
+            return render(
+                        request, 
+                        'AscensionESports_Baseline/thanks.html', 
+                        {
+                            'background': getElderBackground(),
+                            'color': getElderColor(),
+                            'title': 'You have signed up alone for Elder League!',
+                            'year': datetime.now().year,
+                        })
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -268,7 +284,15 @@ def elder_league_team_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/Thanks')
+            return render(
+                        request, 
+                        'AscensionESports_Baseline/thanks.html', 
+                        {
+                            'background': getElderBackground(),
+                            'color': getElderColor(),
+                            'title': 'You have signed your team up for Elder League!',
+                            'year': datetime.now().year,
+                        })
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -295,7 +319,15 @@ def baron_league_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/Thanks')
+            return render(
+                        request, 
+                        'AscensionESports_Baseline/thanks.html', 
+                        {
+                            'background': getBaronBackground(),
+                            'color': getBaronColor(),
+                            'title': 'You have signed your team up for Baron League!',
+                            'year': datetime.now().year,
+                        })
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -322,7 +354,7 @@ def thanks(request):
         {
             'background': getSiteBackground(),
             'color': getSiteColor(),
-            'title':'Thanks!',
+            'title':"Don't think you got here the correct way...",
             'year': datetime.now().year,
         }
     )
