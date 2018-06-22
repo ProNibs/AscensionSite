@@ -6,6 +6,7 @@ import urllib
 
 from django.conf import settings
 from django.contrib import messages
+from django import forms
 
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -34,20 +35,7 @@ def Baron_League_Request(request):
     league_sheet = Baron_League.objects.all()
     return league_sheet
 
-def captcha_validation(request):
-    ''' Begin reCAPTCHA validation '''
-    recaptcha_response = request.POST.get('g-recaptcha-response')
-    url = 'https://www.google.com/recaptcha/api/siteverify'
-    values = {
-        'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-        'response': recaptcha_response
-    }
-    data = urllib.parse.urlencode(values).encode()
-    req =  urllib.request.Request(url, data=data)
-    response = urllib.request.urlopen(req)
-    result = json.loads(response.read().decode())
-    ''' End reCAPTCHA validation '''
-    return result
+
 
 def getSiteBackground():
     return 'steelblue'
@@ -221,13 +209,7 @@ def dragon_league_sign_ups(request):
         form = Dragon_League_Signup_Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            result = captcha_validation(request)
-
-            if result['success']:
-                form.save()
-                messages.success(request, 'New comment added with success!')
-            else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            form.save()
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
@@ -255,13 +237,7 @@ def elder_league_solo_sign_ups(request):
         form = Elder_League_Solo_Signup_Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            result = captcha_validation(request)
-
-            if result['success']:
-                form.save()
-                messages.success(request, 'New comment added with success!')
-            else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            form.save()
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
@@ -288,13 +264,7 @@ def elder_league_team_sign_ups(request):
         form = Elder_League_Team_Signup_Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            result = captcha_validation(request)
-
-            if result['success']:
-                form.save()
-                messages.success(request, 'New comment added with success!')
-            else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            form.save()
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
@@ -321,13 +291,7 @@ def baron_league_sign_ups(request):
         form = Baron_League_Signup_Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            result = captcha_validation(request)
-
-            if result['success']:
-                form.save()
-                messages.success(request, 'New comment added with success!')
-            else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            form.save()
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
