@@ -13,7 +13,61 @@
     body {
         background-color: {{ background }};
         color: {{ color }};
+        background-image: url("{% static 'AscensionESports_Baseline/content/landing-page_50.png' %}"); 
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-attachment: fixed;
+        background-size: contain;
     }
+    .text-nowrap {
+        white-space: nowrap;
+    }
+
+    .navbar-nav {
+        margin: 15px 10px 1px 1px;
+    }
+
+    .nav > li > a {
+        padding: 5px 5px;
+    }
+
+    .col-xs-5ths,
+    .col-sm-5ths,
+    .col-md-5ths,
+    .col-lg-5ths {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .col-xs-5ths {
+        width: 20%;
+        float: left;
+    }
+
+    @media (min-width: 768px) {
+        .col-sm-5ths {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .col-md-5ths {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .col-lg-5ths {
+            width: 20%;
+            float: left;
+        }
+    }
+
+
     </style>
 
 </head>

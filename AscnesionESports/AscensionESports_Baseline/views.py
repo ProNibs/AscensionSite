@@ -97,7 +97,7 @@ def contact(request):
         {
             'background': getSiteBackground(),
             'color': getSiteColor(),
-            'title':'Contact',
+            'title':'Contact Us',
             'message':'Feel free to contact us via any of the following platforms!',
             'year':datetime.now().year,
         }
