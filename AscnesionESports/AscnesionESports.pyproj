@@ -68,6 +68,7 @@
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\fifthaddition.css" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Fill_icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Jungle_icon.png" />
+    <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\landing-page.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\landing-page_50.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Middle_icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\reddit-icon.png" />

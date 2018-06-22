@@ -10,64 +10,62 @@
     <script src="{% static 'AscensionESports_Baseline/scripts/modernizr-2.6.2.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'AscensionESports_Baseline/content/fifthaddition.css' %}" />
     <style>
-    body {
-        background-color: {{ background }};
-        color: {{ color }};
-        background-image: url("{% static 'AscensionESports_Baseline/content/landing-page_50.png' %}"); 
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-        background-attachment: fixed;
-        background-size: contain;
-    }
-    .text-nowrap {
-        white-space: nowrap;
-    }
-
-    .navbar-nav {
-        margin: 15px 10px 1px 1px;
-    }
-
-    .nav > li > a {
-        padding: 5px 5px;
-    }
-
-    .col-xs-5ths,
-    .col-sm-5ths,
-    .col-md-5ths,
-    .col-lg-5ths {
-        position: relative;
-        min-height: 1px;
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
-    .col-xs-5ths {
-        width: 20%;
-        float: left;
-    }
-
-    @media (min-width: 768px) {
-        .col-sm-5ths {
-            width: 20%;
-            float: left;
+        body {
+            background-color: {{ background }};
+            color: {{ color }};
+            background-image: url("{% static 'AscensionESports_Baseline/content/landing-page_50.png' %}"); 
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-attachment: fixed;
+            background-size: contain;
         }
-    }
-
-    @media (min-width: 992px) {
-        .col-md-5ths {
-            width: 20%;
-            float: left;
+        .text-nowrap {
+            white-space: nowrap;
         }
-    }
 
-    @media (min-width: 1200px) {
+        .navbar-nav {
+            margin: 15px 10px 1px 1px;
+        }
+
+        .nav > li > a {
+            padding: 5px 5px;
+        }
+
+        .col-xs-5ths,
+        .col-sm-5ths,
+        .col-md-5ths,
         .col-lg-5ths {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-xs-5ths {
             width: 20%;
             float: left;
         }
-    }
 
+        @media (min-width: 768px) {
+            .col-sm-5ths {
+                width: 20%;
+                float: left;
+            }
+        }
 
+        @media (min-width: 992px) {
+            .col-md-5ths {
+                width: 20%;
+                float: left;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .col-lg-5ths {
+                width: 20%;
+                float: left;
+            }
+        }
     </style>
 
 </head>
@@ -81,7 +79,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand"><img src="https://drive.google.com/uc?export=download&id=16COvTeCUuxOHNkw0KanKXGOskgEF3w0R" width="35" height="35" alt="Ascension eSports"/></a>
+                <a href="/" class="navbar-brand"><img src="{% static 'AscensionESports_Baseline/content/landing-page.png' %}" width="35" height="35" alt="Ascension eSports"/></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
