@@ -25,19 +25,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECRET_KEY = SOME_RANDOM_KEY_HERE
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Security things
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
 NOCAPTCHA = True
-#CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 #SESSION_COOKIE_SECURE = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-#SECURE_SSL_REDIRECT = True
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
 
