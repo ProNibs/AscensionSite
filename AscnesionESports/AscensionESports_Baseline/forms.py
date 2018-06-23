@@ -19,7 +19,7 @@ class CheckDiscordName(forms.Form):
         # We need to verify Discord names end in #1234 (or some numbers)
         check_area = data[-5:]
         if not ( (check_area[0] == '#') and (check_area[1:].isdigit()) ):
-            raise ValidationError( _('Invalid Discord name - should be "DiscordName#1234"'), code='invalid' )
+            raise ValidationError( _('Invalid Discord name - should be "DiscordName#1234"'), code='invalid_discord' )
         return data
 
 class BootstrapAuthenticationForm(AuthenticationForm):
@@ -41,11 +41,27 @@ class Dragon_League_Signup_Form(ModelForm, CheckDiscordName):
         fields = '__all__'
     captcha = ReCaptchaField()
 
+    def clean(self):
+        cleaned_data = super(Dragon_League_Signup_Form, self).clean()
+        primary_role = cleaned_data.get('primary_role')
+        secondary_role = cleaned_data.get('secondary_role')
+        if primary_role and secondary_role: # If both are valid as is
+            if primary_role == secondary_role:
+                self.add_error('secondary_role', 'Must choose a different role for your secondary role')
+
 class Elder_League_Solo_Signup_Form(ModelForm, CheckDiscordName):
-    captcha = ReCaptchaField()
     class Meta:
         model = Elder_Solo_Sign_Ups
         fields = '__all__'
+    captcha = ReCaptchaField()
+
+    def clean(self):
+        cleaned_data = super(Elder_League_Solo_Signup_Form, self).clean()
+        primary_role = cleaned_data.get('primary_role')
+        secondary_role = cleaned_data.get('secondary_role')
+        if primary_role and secondary_role: # If both are valid as is
+            if primary_role == secondary_role:
+                self.add_error('secondary_role', 'Must choose a different role for your secondary role')
 
 class Elder_League_Team_Signup_Form(ModelForm, CheckDiscordName):
     captcha = ReCaptchaField()
