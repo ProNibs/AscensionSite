@@ -11,7 +11,19 @@
     
             <form action=" " method="post">
                 {% csrf_token %}
-                {{ form.as_ul }}
+                <ul>
+                    {% for field in form %}
+                    <div class="fieldWrapper">
+                        <div style="background-color:white; opacity:0.8">
+                            <strong style="color:red;">{{ field.errors }}</strong>
+                        </div>
+                        <li>{{ field.label_tag }} {{ field }}</li>
+                        {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </ul>
                 
                 <input type="submit" id="recaptcha-submit" value="Submit" />
             </form>
