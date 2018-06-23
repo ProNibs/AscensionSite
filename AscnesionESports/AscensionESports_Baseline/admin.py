@@ -42,14 +42,14 @@ class TeamSignUpsAdmin(admin.ModelAdmin):
     list_display = ['your_summoner_name', 'team_name', 'op_gg_link','time_created']
     ordering = ['your_summoner_name']
     def op_gg_link(self,obj):
-       return format_html("<a href='{url}'>OP.GG</a>", url=obj.getOPGGLink())
+       return format_html("<a href='{url}' target='_blank' rel='noopener noreferrer'>OP.GG</a>", url=obj.getOPGGLink())
     op_gg_link.short_description = "na.op.gg"
 
 class SoloSignUpsAdmin(admin.ModelAdmin):
     list_display = ['your_summoner_name', 'primary_role', 'secondary_role', 'op_gg_link', 'time_created']
     ordering = ['primary_role']
     def op_gg_link(self,obj):
-       return format_html("<a href='{url}'>OP.GG</a>", url=obj.getOPGGLink())
+       return format_html("<a href='{url}' target='_blank' rel='noopener noreferrer'>OP.GG</a>", url=obj.getOPGGLink())
     op_gg_link.short_description = "na.op.gg"
 
 admin.site.register(Dragon_League, LeagueAdmin)
