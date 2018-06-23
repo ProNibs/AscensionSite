@@ -1,21 +1,17 @@
 """
 Definition of views.
 """
-import json
-import urllib
 
 from django.conf import settings
-from django.contrib import messages
 from django import forms
 
 from django.shortcuts import render
 from django.http import HttpRequest
-from django.http import HttpResponse
-from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from AscensionESports_Baseline.models import Dragon_League, Elder_League, Baron_League
 from AscensionESports_Baseline.models import Dragon_Post, Elder_Post, Baron_Post
 
-from django.http import HttpResponseRedirect
+
 
 from .forms import (
     Dragon_League_Signup_Form, Elder_League_Solo_Signup_Form, Elder_League_Team_Signup_Form, Baron_League_Signup_Form
@@ -213,15 +209,7 @@ def dragon_league_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return render(
-                        request, 
-                        'AscensionESports_Baseline/thanks.html', 
-                        {
-                            'background': getDragonBackground(),
-                            'color': getDragonColor(),
-                            'title': 'You have signed up for Dragon League!',
-                            'year': datetime.now().year,
-                        })
+            return HttpResponseRedirect('/Thanks')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -249,15 +237,7 @@ def elder_league_solo_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return render(
-                        request, 
-                        'AscensionESports_Baseline/thanks.html', 
-                        {
-                            'background': getElderBackground(),
-                            'color': getElderColor(),
-                            'title': 'You have signed up alone for Elder League!',
-                            'year': datetime.now().year,
-                        })
+            return HttpResponseRedirect('/Thanks')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -284,15 +264,7 @@ def elder_league_team_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return render(
-                        request, 
-                        'AscensionESports_Baseline/thanks.html', 
-                        {
-                            'background': getElderBackground(),
-                            'color': getElderColor(),
-                            'title': 'You have signed your team up for Elder League!',
-                            'year': datetime.now().year,
-                        })
+            return HttpResponseRedirect('/Thanks')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -354,7 +326,7 @@ def thanks(request):
         {
             'background': getSiteBackground(),
             'color': getSiteColor(),
-            'title':"Don't think you got here the correct way...",
+            'title':"You are now signed up!",
             'year': datetime.now().year,
         }
     )

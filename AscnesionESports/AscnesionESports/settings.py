@@ -28,16 +28,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = False
 
 # Security things
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['www.aesports.gg', '.herokuapp.com', 'localhost']
 NOCAPTCHA = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+SECURE_HSTS_SECONDS = 31536000 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AscensionESports_Baseline',
     'captcha',
+    'sslserver',
 ]
 
 MIDDLEWARE_CLASSES = [
