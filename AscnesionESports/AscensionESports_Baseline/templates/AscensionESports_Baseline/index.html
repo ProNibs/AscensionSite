@@ -4,15 +4,21 @@
 
 
 <h1>Ascension eSports</h1>
-<p class="lead">The best commuity around League of Legends! </p>
+<p class="lead">The best commuinty around League of Legends! </p>
 
 
 <div class="row">
     <div class="col-sm-6">
-        <h2>About Us</h2>
+        <h2>Sign Ups are open now!</h2>
         <p>
-            Ascension eSports is a League of Legends-based commuity dedicated to providing players of all ELOs a place to practice and/or compete with players of similar skill levels.
+            Click below for the League corresponding to your rank to sign up!
         </p>
+
+        <p>Dragon League (Bronze/Silver):<a class="button dragon_sign_ups" href="{% url 'dragon_league_sign_ups' %}">Sign Up Alone</a></p>
+        <p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_solo_league_sign_ups' %}">Sign Up Alone</a></p>
+        <p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_team_league_sign_ups' %}">Sign Up as a Team</a></p>
+        <p>Baron League (Diamond+): <a class="button baron_sign_ups" href="{% url 'baron_league_sign_ups' %}">Sign Up as a Team</a></p>
+
     </div>
     <div class="col-sm-6">
         <h2>What We Offer Currently</h2>
