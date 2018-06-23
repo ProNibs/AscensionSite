@@ -11,24 +11,27 @@
     <div class="col-sm-6">
         <h2>Sign Ups are open now!</h2>
         <p>
-            Click below for the League corresponding to your rank to sign up!
+            Click below for the League corresponding to your rank to sign up! <br />
+            All leagues start at 6 pm CST and each have their own day!  
+            <ul>
+                <li> Dragon - Tuesdays </li>
+                <li> Elder - Thursdays </li>
+                <li> Baron - Fridays </li>
+            </ul>
         </p>
 
-        <p>Dragon League (Bronze/Silver):<a class="button dragon_sign_ups" href="{% url 'dragon_league_sign_ups' %}">Sign Up Alone</a></p>
-        <p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_solo_league_sign_ups' %}">Sign Up Alone</a></p>
-        <p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_team_league_sign_ups' %}">Sign Up as a Team</a></p>
-        <p>Baron League (Diamond+): <a class="button baron_sign_ups" href="{% url 'baron_league_sign_ups' %}">Sign Up as a Team</a></p>
+        <div class="row"><p>Dragon League (Bronze/Silver):<a class="button dragon_sign_ups" href="{% url 'dragon_league_sign_ups' %}">Sign Up Alone </a></p></div>
+        <div class="row"><p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_solo_league_sign_ups' %}">Sign Up Alone</a></p></div>
+        <div class="row"><p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_team_league_sign_ups' %}">Sign Up as a Team</a></p></div>
+        <div class="row"><p>Baron League (Diamond+): <a class="button baron_sign_ups" href="{% url 'baron_league_sign_ups' %}">Sign Up as a Team</a></p></div>
 
     </div>
     <div class="col-sm-6">
-        <h2>What We Offer Currently</h2>
-        <p>Currently, we have the following leagues running for League of Legends in the NA server.</p>
-        <ul>
-            <li>Dragon League (Bronze/Silver ELOs)</li>
-            <li>Elder League (Gold/Platinum ELOs)</li>
-            <li>Baron League(Diamond+ ELOs/Pre-made teams)</li>
-        </ul>
+        <div class="intrinsic-container intrinsic-container-16x9">
+            <iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel=aesports_gg" allowfullscreen></iframe>
+        </div>
     </div>
 </div>
+
 
 {% endblock %}
