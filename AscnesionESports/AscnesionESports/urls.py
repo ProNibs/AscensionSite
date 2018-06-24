@@ -17,8 +17,8 @@ admin.autodiscover()
 urlpatterns = [
     # Examples:
     url(r'^$', AscensionESports_Baseline.views.home, name='home'),
-    url(r'^contact$', AscensionESports_Baseline.views.contact, name='contact'),
-    url(r'^about$', AscensionESports_Baseline.views.about, name='about'),
+    url(r'^Contact$', AscensionESports_Baseline.views.contact, name='contact'),
+    url(r'^About$', AscensionESports_Baseline.views.about, name='about'),
     url(r'^Dragon League$', AscensionESports_Baseline.views.dragon, name='dragon'),
     url(r'^Elder League$', AscensionESports_Baseline.views.elder, name='elder'),
     url(r'^Baron League$', AscensionESports_Baseline.views.baron, name='baron'),

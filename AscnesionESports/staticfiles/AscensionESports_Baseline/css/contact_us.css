@@ -1,0 +1,24 @@
+.filter_button{
+    display: inline-block;
+}
+
+h3 {
+    text-align: center;
+}
+
+.background {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.spacer {
+    border-style: solid;
+    border-color: grey;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 10px;
+    border-bottom-width: 0px;
+}
+
+.spacer_no_top {
+    border-top-width: 0px;
+}

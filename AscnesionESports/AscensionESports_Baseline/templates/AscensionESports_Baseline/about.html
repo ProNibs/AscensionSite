@@ -1,6 +1,12 @@
 ﻿{% extends "AscensionESports_Baseline/layout.html" %}
 
 {% block content %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AscensionESports_Baseline/css/contact_us.css' %}" />
+</head>
+
+
 <big>
 <h2>{{ title }}</h2>
 
@@ -15,14 +21,49 @@
 
 <h2>Our Staff</h2>
 
-  
-<b>Admins:</b>
-<ul>
-    <li>Æ | Spaceyness, Head event coordinator and stats</li>
-    <li>Æ | ProNibs , Head of elder league and dragon league</li>
-    <li>OE | Robin , Head of baron league and OE representative</li>
-    <li>Æ | XT , Head of Production</li>
-</ul>
+<div class="filter_button">
+    
+</div>
+
+<div class="staff_container">
+    <div class="row background spacer">
+        <h3>Admins:</h3><br />
+            <div class="col-md-3">Æ | Spaceyness <br /> Head event coordinator and stats</div>
+            <div class="col-md-3">Æ | ProNibs <br /> Head of elder league and dragon league</div>
+            <div class="col-md-3">OE | Robin <br /> Head of baron league and OE representative</div>
+            <div class="col-md-3">Æ | XT <br /> Head of Production</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 background spacer">
+            <h3>Elder League:</h3><br />
+            <p class="col-md-6">Blblaze/Teemo </p>
+            <p class="col-md-6">BladéCallér </p>
+        </div><div class="col-md-4 background spacer">
+            <h3>Dragon League:</h3><br />
+            <p class="col-md-6">Brïnk </p>
+            <p class="col-md-6">Omega Squad Fizz </p>
+        </div><div class="col-md-4 background spacer">
+            <h3>Baron League:</h3><br />
+            <p class="col-md-6">Chris.#2095 </p>
+            <p class="col-md-6">RedFlameEvolved </p>
+        </div>
+    </div>
+
+    <div class="row background spacer" style="border-bottom:0px;"><h3>Production Crew</h3></div>
+    <div class="row background">  
+        <p class="col-md-3 spacer">Sir Potato IX <br /> PBP</p>
+        <p class="col-md-3 spacer">Omega Squad Fizz <br /> Color/Analyst</p>
+        <p class="col-md-3 spacer">backpack <br /> PBP </p>
+        <p class="col-md-3 spacer">Raafaa <br /> PBP </p>
+        <p class="col-md-3 spacer spacer_no_top">Jammernaut <br /> Color/Analyst</p>
+        <p class="col-md-3 spacer spacer_no_top">Shadowspirit567 <br /> Color</p>
+        <p class="col-md-3 spacer spacer_no_top">Hyper10sion <br /> PBP/Analyst</p>
+        <p class="col-md-3 spacer spacer_no_top">Æ | YodaGG <br /> Color</p>
+    </div>
+</div>
+
+
 <b>Event Coordinators:</b>
 <ul>
     <li>RedFlameEvolved </li>
@@ -33,21 +74,7 @@
     <li>Æ | YodaGG </li>
     <li>tetran </li>
 </ul>
-<b>Elder League:</b>
-<ul>
-    <li>Blblaze/Teemo </li>
-    <li>BladéCallér , moved from dragon league to elder league</li>
-</ul>
-<b>Dragon League:</b>
-<ul>
-    <li>Brïnk </li>
-    <li>Omega Squad Fizz </li>
-</ul>
-<b>Baron League:</b>
-<ul>
-    <li>Chris.#2095 </li>
-    <li>RedFlameEvolved </li>
-</ul>
+
 <b>Graphic Artist:</b>
 <ul>
     <li>EllyUzuki </li>
@@ -60,16 +87,6 @@
 <ul>
     <li>I MISS DEATHOLY </li>
 </ul>
-<b>Production:</b>
-<ul>
-    <li>Sir Potato IX , PBP</li>
-    <li>Omega Squad Fizz , Color/Analyst</li>
-    <li>backpack , PBP </li>
-    <li>Raafaa, PBP </li>
-    <li>Jammernaut, Color/Analyst</li>
-    <li>Shadowspirit567, Color</li>
-    <li>Hyper10sion the Caster, PBP/Analyst</li>
-    <li>Æ | YodaGG, Color</li>
-</ul>
+
 </big>
 {% endblock %}

@@ -66,6 +66,7 @@
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Bottom_icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\discord-small.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\email-icon.png" />
+    <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\css\contact_us.css" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\css\fifthaddition.css" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Fill_icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\Jungle_icon.png" />
@@ -83,7 +84,7 @@
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\league_layout.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\logoff.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\sign_ups.html" />
-    <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\thanks.html" />
+    <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\Thanks.html" />
     <Content Include="AscnesionESports\secret_settings.py.template">
       <SubType>Code</SubType>
     </Content>

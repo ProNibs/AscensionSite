@@ -291,15 +291,7 @@ def baron_league_sign_ups(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return render(
-                        request, 
-                        'AscensionESports_Baseline/thanks.html', 
-                        {
-                            'background': getBaronBackground(),
-                            'color': getBaronColor(),
-                            'title': 'You have signed your team up for Baron League!',
-                            'year': datetime.now().year,
-                        })
+            return HttpResponseRedirect('/Thanks')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -322,7 +314,7 @@ def thanks(request):
 
     return render(
         request,
-        'AscensionESports_Baseline/thanks.html',
+        'AscensionESports_Baseline/Thanks.html',
         {
             'background': getSiteBackground(),
             'color': getSiteColor(),
