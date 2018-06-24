@@ -78,6 +78,7 @@
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\twitch-icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\twitter-icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\youtube-icon.png" />
+    <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\central_league_sign_ups.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\news.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\league_layout.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\logoff.html" />

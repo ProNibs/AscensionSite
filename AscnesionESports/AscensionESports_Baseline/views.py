@@ -330,3 +330,17 @@ def thanks(request):
             'year': datetime.now().year,
         }
     )
+
+def league_sign_ups(request):
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'AscensionESports_Baseline/central_league_sign_ups.html',
+        {
+            'background': getSiteBackground(),
+            'color': getSiteColor(),
+            'title':'How to Sign Up',
+            'year': datetime.now().year,
+        }
+    )

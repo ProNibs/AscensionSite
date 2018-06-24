@@ -3,15 +3,14 @@
 {% block content %}
 
 
-<h1>Ascension ESports</h1>
+<h1>Ascension Esports</h1>
 <p class="lead">The best community around League of Legends! </p>
-
 
 <div class="row">
     <div class="col-sm-6">
         <h2>Sign Ups are now open!</h2>
         <p>
-            Click below for the League corresponding to your rank to sign up! <br />
+            Click below to sign up! <br />
             All leagues run for 9 weeks, playing 2 Bo1 games each night. <br />
             All leagues start at 6 pm CST and each have their own day!
             <ul>
@@ -20,14 +19,10 @@
                 <li> Baron - Fridays </li>
             </ul>
         </p>
-        <div class="row"><a class="button site_background" href="https://discord.gg/sKqQ5JN" target='_blank' rel='noopener noreferrer' style="float:none; border-radius: 0px;">Click here to join us on Discord!</a></div><br />
-
-        <div class="row"><p>Dragon League (Bronze/Silver):<a class="button dragon_sign_ups" href="{% url 'dragon_league_sign_ups' %}">Sign Up Alone </a></p></div>
-        <div class="row"><p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_solo_league_sign_ups' %}">Sign Up Alone</a></p></div>
-        <div class="row"><p>Elder League (Gold/Platinum):<a class="button elder_sign_ups" href="{% url 'elder_team_league_sign_ups' %}">Sign Up as a Team</a></p></div>
-        <div class="row"><p>Baron League (Diamond+): <a class="button baron_sign_ups" href="{% url 'baron_league_sign_ups' %}">Sign Up as a Team</a></p></div>
-
+        <div class="row"><a class="button site_background tab" href="https://discord.gg/sKqQ5JN" target='_blank' rel='noopener noreferrer' style="float:none; border-radius: 0px; width:250px;">Click here to join us on Discord!</a></div><br />
+        <div class="row"><a class="button sign_ups_background tab" href="{% url 'league_sign_ups' %}" style="float:none; border-radius: 8px;">Sign Up Now!</a></div>
     </div>
+
     <div class="col-sm-6">
         <div class="intrinsic-container intrinsic-container-16x9">
             <iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel=aesports_gg" allowfullscreen></iframe>
