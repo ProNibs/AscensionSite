@@ -58,4 +58,3 @@ urlpatterns = [
     url(r'^AEadmin/', include(admin.site.urls)),
 ]
 
-
