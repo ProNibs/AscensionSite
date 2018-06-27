@@ -2,7 +2,10 @@
     display: inline-block;
 }
 
-h3 {
+h2,
+h3,
+h4,
+div > p {
     text-align: center;
 }
 
@@ -21,4 +24,8 @@ h3 {
 
 .spacer_no_top {
     border-top-width: 0px;
+}
+
+.spacer_bottom_only {
+    border-bottom-width: 5px;
 }
