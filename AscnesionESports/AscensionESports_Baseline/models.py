@@ -86,52 +86,52 @@ class Generic_Solo_Sign_Up(models.Model):
 class Dragon_League(A_League):
     class Meta:
         db_table="Dragon League"
-        verbose_name = "Dragon League"
+        verbose_name_plural = "Dragon League"
 
 class Dragon_Standings(A_Team):
     class Meta:
         db_table="Dragon League Standing"
-        verbose_name = "Dragon League Standings"
+        verbose_name_plural = "Dragon League Standings"
 
 class Dragon_Solo_Sign_Ups(Generic_Solo_Sign_Up):
     class Meta:
         db_table = "Dragon Solo Sign Up"
-        verbose_name = "Dragon Solo Sign Ups"
+        verbose_name_plural = "Dragon Solo Sign Ups"
 
 class Elder_League(A_League):
     class Meta:
         db_table="Elder League"
-        verbose_name = "Elder League"
+        verbose_name_plural = "Elder League"
 
 class Elder_Standings(A_Team):
     class Meta:
         db_table="Elder League Standing"
-        verbose_name = "Elder League Standings"
+        verbose_name_plural = "Elder League Standings"
 
 class Elder_Team_Sign_Ups(Generic_Team_Sign_Up):
     class Meta:
         db_table = "Elder Team Sign Up"
-        verbose_name = "Elder Team Sign Ups"
+        verbose_name_plural = "Elder Team Sign Ups"
 
 class Elder_Solo_Sign_Ups(Generic_Solo_Sign_Up):
     class Meta:
         db_table = "Elder Solo Sign Up"
-        verbose_name = "Elder Solo Sign Ups"
+        verbose_name_plural = "Elder Solo Sign Ups"
 
 class Baron_League(A_League):
     class Meta:
         db_table="Baron League"
-        verbose_name = "Baron League"
+        verbose_name_plural = "Baron League"
 
 class Baron_Standings(A_Team):
     class Meta:
         db_table="Baron League Standing"
-        verbose_name = "Baron League Standings"
+        verbose_name_plural = "Baron League Standings"
 
 class Baron_Team_Sign_Ups(Generic_Team_Sign_Up):
     class Meta:
         db_table = "Baron League Sign Up"
-        verbose_name = "Baron Sign Ups"
+        verbose_name_plural = "Baron Sign Ups"
 
  
 class Post(models.Model):
@@ -148,14 +148,14 @@ class Post(models.Model):
 class Dragon_Post(Post):
     class Meta:
         db_table = "Dragon News"
-        verbose_name = "Dragon News"
+        verbose_name_plural = "Dragon News"
 
 class Elder_Post(Post):
     class Meta:
         db_table = "Elder News"
-        verbose_name = "Elder News"
+        verbose_name_plural = "Elder News"
 
 class Baron_Post(Post):
     class Meta:
         db_table = "Baron News"
-        verbose_name = "Baron News"
+        verbose_name_plural = "Baron News"
