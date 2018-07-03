@@ -11,8 +11,107 @@ Positions = (('Top', 'Top'),('Jungle', 'Jungle'),('Mid', 'Mid'),('ADC', 'ADC'),(
 Roles = (('Top', 'Top'),('Jungle', 'Jungle'),('Mid', 'Mid'),('ADC', 'ADC'),('Support','Support'),('Fill','Fill'))
 
 Leagues = (('Dragon', 'Dragon'),('Elder', 'Elder'),('Baron','Baron'))
+
+Side_Choices = (('Blue','Blue'),('Red','Red'))
 # Create your models here.
 
+class A_Player(models.Model):
+    # This gives overall stats of a specific player
+    summoner_name = models.CharField(max_length=32, unique=True)
+    team_name = models.CharField(max_length=20)
+    position = models.CharField(max_length=20, choices=Roles)
+
+    # Stats on times played
+    games_played = models.PositiveIntegerField(default=0)
+    mins_played = models.PositiveIntegerField(default=0)
+    first_blood = models.PositiveIntegerField(default=0)
+    
+    # In Game stats
+    kills = models.PositiveIntegerField(default=0)
+    deaths = models.PositiveIntegerField(default=0)
+    assists = models.PositiveIntegerField(default=0)
+    creep_score = models.PositiveIntegerField(default=0)
+    gold = models.PositiveIntegerField(default=0)
+    gold_share = models.FloatField(default=0)
+    damage_done = models.PositiveIntegerField(default=0)
+    vision_score = models.PositiveIntegerField(default=0)
+    crowd_control_score = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.summoner_name
+
+    def get_absolute_url(self):
+        return reverse('model-detail-view', arg_str=[str(self.id)])
+
+    def get_KDA(self):
+        return (self.kills+ self.assists) / float(self.deaths)
+
+    # Avg / Game
+    def get_average_kills(self):
+        return (self.kills / self.games_played)
+    def get_average_deaths(self):
+        return (self.deaths / self.games_played)
+    def get_average_assists(self):
+        return (self.assists / self.games_played)
+    def get_average_creep_score(self):
+        return (self.creep_score / self.games_played)
+    def get_average_gold(self):
+        return (self.gold / self.games_played)
+    def get_average_gold_share(self):
+        return (self.gold_share / self.games_played)
+    def get_average_damage_done(self):
+        return (self.damage_done / self.games_played)
+    def get_average_vision_score(self):
+        return (self.vision_score / self.games_played)
+    def get_average_crowd_control_score(self):
+        return (self.crowd_control_score / self.games_played)
+
+
+    # Avg / Mins.
+    def get_creep_score_per_minute(self):
+        return (self.creep_score / self.mins_played)
+    def get_gold_per_minute(self):
+        return (self.gold / self.mins_played)
+    def get_damage_done_per_minute(self):
+        return (self.damage_done / self.mins_played)
+    def get_vision_score_per_minute(self):
+        return (self.vision_score / self.mins_played)
+    def get_crowd_control_score_per_minute(self):
+        return (self.crowd_control_score / self.mins_played)
+
+class A_Match(models.Model):
+    blue_team = models.CharField(max_length=20)
+    red_team = models.CharField(max_length=20)
+    mins_played = models.PositiveIntegerField()
+
+
+
+class A_Team_Stats(models.Model):
+    team_side = models.CharField(max_length=4, choices=Side_Choices)
+
+class A_Position_Stats(models.Model):
+    # This gives overall stats of a specific player
+    summoner_name = models.CharField(max_length=32, unique=True)
+
+    # Stats on times played
+    first_blood = models.BooleanField(default=False)
+    largest_mult_kill = models.PositiveIntegerField(default=0)
+    
+    # In Game stats
+    kills = models.PositiveIntegerField(default=0)
+    deaths = models.PositiveIntegerField(default=0)
+    assists = models.PositiveIntegerField(default=0)
+    creep_score = models.PositiveIntegerField(default=0)
+    gold = models.PositiveIntegerField(default=0)
+    damage_done = models.PositiveIntegerField(default=0)
+    vision_score = models.PositiveIntegerField(default=0)
+    crowd_control_score = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        db_table = "A Single Roles Stats"
+        abstract = True
+
+    
 class A_League(models.Model):
     acronym = models.CharField(max_length=4)
     team_name = models.CharField(max_length=20)
@@ -50,7 +149,7 @@ class A_Team(models.Model):
     ties = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return team_name
+        return self.team_name
     def get_absolute_url(self):
         return reverse('model-detail-view', arg_str=[str(self.id)])
     class Meta:
