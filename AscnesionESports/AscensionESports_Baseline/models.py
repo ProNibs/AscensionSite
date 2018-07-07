@@ -143,7 +143,7 @@ class A_League(models.Model):
         abstract = True
 
 class A_Team(models.Model):
-    team_name = models.CharField(max_length=20)
+    team_name = models.CharField(max_length=30)
     wins = models.PositiveIntegerField(default=0)
     losses = models.PositiveIntegerField(default=0)
     ties = models.PositiveIntegerField(default=0)
