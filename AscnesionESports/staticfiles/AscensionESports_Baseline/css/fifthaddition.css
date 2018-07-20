@@ -115,6 +115,11 @@ body {
     float: left;
 }
 
+.contact_img img {
+    width: 125px;
+    height: 125px;
+}
+
 .center {
     width: 200px;
     margin: 0px auto;
