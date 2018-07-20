@@ -85,7 +85,6 @@ class A_Match(models.Model):
     mins_played = models.PositiveIntegerField()
 
 
-
 class A_Team_Stats(models.Model):
     team_side = models.CharField(max_length=4, choices=Side_Choices)
 
