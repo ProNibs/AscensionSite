@@ -8,9 +8,11 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from captcha.fields import ReCaptchaField   
+from django.db.models import Q
 
-from AscensionESports_Baseline.models import (
-    Dragon_Solo_Sign_Ups, Elder_Solo_Sign_Ups, Elder_Team_Sign_Ups ,Baron_Team_Sign_Ups
+from .models import (
+    Dragon_Solo_Sign_Ups, Elder_Solo_Sign_Ups, Elder_Team_Sign_Ups ,Baron_Team_Sign_Ups,
+    Baron_League_Rosters, Baron_Players
     )
 
 class CheckDiscordName(forms.Form):
@@ -33,8 +35,8 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
 
-
-
+# Website Forms
+#region 
 class Dragon_League_Signup_Form(ModelForm, CheckDiscordName):
     class Meta:
         model = Dragon_Solo_Sign_Ups
@@ -74,3 +76,17 @@ class Baron_League_Signup_Form(ModelForm,CheckDiscordName):
     class Meta:
         model = Baron_Team_Sign_Ups
         fields = '__all__'
+
+#endregion
+
+'''
+# Admin Forms
+class Roster_Filter(ModelForm):
+    class Meta:
+        model = Baron_League_Rosters
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(Roster_Filter, self).__init__(*args, **kwargs)
+        self.fields['top_laner'].queryset = Baron_Players.objects.filter(Q(Baron_League_Rosters__isnull=True))
+'''
