@@ -3,6 +3,7 @@ Definition of models.
 """
 
 from django.db import models
+from django.urls import reverse
 
 Positions = (('Top', 'Top'),('Jungle', 'Jungle'),('Mid', 'Mid'),('ADC', 'ADC'),('Support','Support'),('Substitute','Substitute'),
              ('Pending-Top','Pending-Top'), ('Pending-Jgl','Pending-Jgl'), ('Pending-Mid','Pending-Mid'),
@@ -14,6 +15,8 @@ Leagues = (('Dragon', 'Dragon'),('Elder', 'Elder'),('Baron','Baron'))
 
 Side_Choices = (('Blue','Blue'),('Red','Red'))
 
+
+
 # Create your models here.
 
 class A_League(models.Model):
@@ -22,6 +25,7 @@ class A_League(models.Model):
     wins = models.PositiveIntegerField(default=0)
     losses = models.PositiveIntegerField(default=0)
     tie_breaker = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True, help_text="This will change to false whenever the League is over.")
 
     top_laner = models.CharField(max_length=32)
     jungler = models.CharField(max_length=32)
@@ -40,8 +44,8 @@ class A_League(models.Model):
         return self.team_name
     def getTeamName(self):
         return self.team_name
-    def get_absolute_url(self):
-        return reverse('model-detail-view', arg_str=[str(self.id)])
+    #def get_absolute_url(self):
+    #   return reverse('baron', args=[str(self.team_name)])
     def getOPGGLink(self):
         multi_query = str(self.top_laner)+'%2C'+str(self.jungler)+'%2C'+str(self.mid_laner)+'%2C'+str(self.ad_carry)+'%2C'+str(self.support)
         final_query = 'http://na.op.gg/multi/query=' + multi_query
@@ -55,6 +59,7 @@ General Design Pattern and Database Flow
 
 Each League has a Players Table.
 Teams are made from the Players Table.
+There is a global League table that tracks which leagues are active and when started.
 
 There is a match report backend that simply requires Blue Team, Red Team, and Riot MatchID.
 It will use the Riot API to get stats on the match and assign those stats to each of the players.
@@ -66,6 +71,10 @@ It will update the team score and the standings as well.
 # Players
 #region Players
 class A_Player(models.Model):
+    def __init__(self, *args, **kwargs):
+        super(A_Player, self).__init__(*args, **kwargs)
+        self.old_largest_multi_kill = self.largest_multi_kill
+
     # This gives overall stats of a specific player
     summoner_name = models.CharField(max_length=32, unique=True)
     primary_role = models.CharField(max_length=20, choices=Roles)
@@ -74,9 +83,9 @@ class A_Player(models.Model):
     # Stats on times played
     games_played = models.PositiveIntegerField(default=0)
     mins_played = models.PositiveIntegerField(default=0)
-    first_blood = models.PositiveIntegerField(default=0)
-    largest_mult_kill = models.PositiveIntegerField(default=0)
-    
+    first_bloods = models.PositiveIntegerField(default=0)
+    largest_multi_kill = models.PositiveIntegerField(default=0)
+    first_tower = models.PositiveIntegerField(default=0)
 
     # In Game stats
     kills = models.PositiveIntegerField(default=0)
@@ -86,8 +95,10 @@ class A_Player(models.Model):
     gold = models.PositiveIntegerField(default=0)
     gold_share = models.FloatField(default=0)
     damage_done = models.PositiveIntegerField(default=0)
+    damage_share = models.FloatField(default=0)
     vision_score = models.PositiveIntegerField(default=0)
     crowd_control_score = models.PositiveIntegerField(default=0)
+    csd_at_ten = models.FloatField(default=0)
 
     # Calculated stats
     KDA = models.FloatField(default=0)
@@ -98,8 +109,10 @@ class A_Player(models.Model):
     avg_gold = models.FloatField(default=0)
     avg_gold_share = models.FloatField(default=0)
     avg_damage_done = models.FloatField(default=0)
+    avg_damage_share = models.FloatField(default=0)
     avg_vision_score = models.FloatField(default=0)
     avg_crowd_control_score = models.FloatField(default=0)
+    avg_csd_at_ten = models.FloatField(default=0)
 
     creep_score_per_minute = models.FloatField(default=0)
     gold_per_minute = models.FloatField(default=0)
@@ -107,44 +120,48 @@ class A_Player(models.Model):
     vision_score_per_minute = models.FloatField(default=0)
     crowd_control_score_per_minute = models.FloatField(default=0)
 
+
     def __str__(self):
         return self.summoner_name
 
-    def get_absolute_url(self):
-        return reverse('model-detail-view', arg_str=[str(self.id)])
-
     def save(self, *args, **kwargs): 
-        if (self.games_played != 0) and (self.mins_played != 0):
+        if (self.games_played is not 0) and (self.mins_played is not 0):
             self.update_stats()
         super(A_Player, self).save(*args, **kwargs)
         
-
+    def check_multi_kills(self):    #Check if old value greater than new
+        if (self.largest_multi_kill < self.old_largest_multi_kill):
+            self.largest_multi_kill = self.old_largest_multi_kill
         
-
     class Meta:
         db_table = "A Single Players Stats"
         abstract = True
 
     def update_stats(self):
-        KDA = self.get_KDA()
-        avg_kills = self.get_average_kills()
-        avg_deaths = self.get_average_deaths()
-        avg_assists = self.get_average_assists()
-        avg_creep_score = self.get_average_creep_score()
-        avg_gold = self.get_average_gold()
-        avg_gold_share = self.get_average_gold_share()
-        avg_damage_done = self.get_average_damage_done
-        avg_vision_score = self.get_average_vision_score()
-        avg_crowd_control_score = self.get_average_crowd_control_score()
-
-        creep_score_per_minute = self.get_creep_score_per_minute()
-        gold_per_minute = self.get_gold_per_minute()
-        damage_done_per_minute = self.get_damage_done_per_minute()
-        vision_score_per_minute = self.get_vision_score_per_minute()
-        crowd_control_score_per_minute = self.get_crowd_control_score_per_minute()
+        self.check_multi_kills()
+        self.KDA = self.get_KDA()
+        self.avg_kills = self.get_average_kills()
+        self.avg_deaths = self.get_average_deaths()
+        self.avg_assists = self.get_average_assists()
+        self.avg_creep_score = self.get_average_creep_score()
+        self.avg_gold = self.get_average_gold()
+        self.avg_gold_share = self.get_average_gold_share()
+        self.avg_damage_done = self.get_average_damage_done()
+        self.avg_damage_share = self.get_average_damage_share()
+        self.avg_vision_score = self.get_average_vision_score()
+        self.avg_crowd_control_score = self.get_average_crowd_control_score()
+        self.avg_csd_at_ten = self.get_average_csd_at_ten()
+        
+        self.creep_score_per_minute = self.get_creep_score_per_minute()
+        self.gold_per_minute = self.get_gold_per_minute()
+        self.damage_done_per_minute = self.get_damage_done_per_minute()
+        self.vision_score_per_minute = self.get_vision_score_per_minute()
+        self.crowd_control_score_per_minute = self.get_crowd_control_score_per_minute()
+        
 
     def get_KDA(self):
         return (self.kills+ self.assists) / float(self.deaths)
+    
 
     # Avg / Game
     def get_average_kills(self):
@@ -152,20 +169,23 @@ class A_Player(models.Model):
     def get_average_deaths(self):
         return (self.deaths / self.games_played)
     def get_average_assists(self):
-        return (self.assists / self.games_played)
+        return (self.assists // self.games_played)
     def get_average_creep_score(self):
-        return (self.creep_score / self.games_played)
+        return (self.creep_score // self.games_played)
     def get_average_gold(self):
-        return (self.gold / self.games_played)
+        return (self.gold // self.games_played)
     def get_average_gold_share(self):
-        return (self.gold_share / self.games_played)
+        return (self.gold_share // self.games_played)
     def get_average_damage_done(self):
-        return (self.damage_done / self.games_played)
+        return (self.damage_done // self.games_played)
+    def get_average_damage_share(self):
+        return (self.damage_share // self.games_played)    
     def get_average_vision_score(self):
-        return (self.vision_score / self.games_played)
+        return (self.vision_score // self.games_played)
     def get_average_crowd_control_score(self):
-        return (self.crowd_control_score / self.games_played)
-
+        return (self.crowd_control_score // self.games_played)
+    def get_average_csd_at_ten(self):
+        return (self.csd_at_ten // self.games_played)
 
     # Avg / Mins.
     def get_creep_score_per_minute(self):
@@ -180,6 +200,9 @@ class A_Player(models.Model):
         return (self.crowd_control_score / self.mins_played)
 
 class Baron_Players(A_Player):
+    def get_absolute_url(self):
+        return reverse('baron_stats', args=(self.summoner_name,))
+
     class Meta:
         db_table="Baron Players"
         verbose_name_plural = "Baron Players"
@@ -265,7 +288,7 @@ class Report_Match(models.Model):
         return str(self.match_id)
 
     def get_absolute_url(self):
-        return reverse('model-detail-view', arg_str=[str(self.id)])
+        return reverse('model-detail-view', args=[str(self.id)])
 
     class Meta:
         db_table = "A Single Match"
@@ -358,6 +381,52 @@ class Baron_Match_Report(Report_Match):
 
 #endregion
 
+# Global League Tracking Table
+# Once created, will create matches that link back to this creation.
+# Will pull all active rosters in a League
+common_weeks = ((5,5),(9,9))
+series_choices = ((1,'Bo1'),(2,'Bo2'),(3,'Bo3'))
+
+class League_Track(models.Model):
+    league_name = models.CharField(max_length=50, default='Dragon League X')
+    league = models.CharField(max_length=50, choices=Leagues)
+    start_date = models.DateField(auto_now_add=True)
+    week_length = models.PositiveIntegerField(default=9, choices=common_weeks)
+    regular_season_schedule = models.PositiveIntegerField(default=1, choices=series_choices)
+    number_of_teams = models.PositiveIntegerField(default=10, help_text='This is always assumed to be 10')
+    pools = models.PositiveIntegerField(default=1, help_text='In case we got multiple Elder Leagues again')
+    
+    def __str__(self):
+        return self.league_name
+
+    def get_League(self):
+        self.temp_value = None
+        self.team = None
+        if self.league == 'Dragon':
+            self.temp_value = Dragon_League
+        elif self.league == 'Elder':
+            self.temp_value = Elder_League
+        elif self.league == 'Baron':
+            self.temp_value = Baron_League_Rosters
+        self.team = models.ForeignKey(self.temp_value, on_delete=models.CASCADE, related_name='rosters', limit_choices_to={'is_active': True})
+        print(self.team.team_name.all())
+
+    def create_league(self):
+        if self.week_length is 9: # 9-week schedule
+            if self.regular_season_schedule is 1:   #Bo1, double round robin
+                return 0
+            else:   # 9-week schedule with Bo2/Bo3 is single round robin
+                return 0
+        elif self.week_length is 5: # Shortened 5-week schedule, single round robin
+            return 0
+
+    def save(self, *args, **kwargs):
+        self.get_League()
+        super(League_Track, self).save(*args, **kwargs)
+
+    class Meta:
+        db_table = "League Tracker"
+        verbose_name_plural = "League Tracker"
 
 class Dragon_League(A_League):
     class Meta:
@@ -419,6 +488,8 @@ class Elder_Team_Sign_Ups(Generic_Team_Sign_Up):
         verbose_name_plural = "Elder Team Sign Ups"
 
 class Elder_Solo_Sign_Ups(Generic_Solo_Sign_Up):
+    duo_partner = models.CharField(max_length=20, blank=True)
+
     class Meta:
         db_table = "Elder Solo Sign Up"
         verbose_name_plural = "Elder Solo Sign Ups"

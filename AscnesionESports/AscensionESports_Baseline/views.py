@@ -4,13 +4,14 @@ Definition of views.
 
 from django.conf import settings
 from django import forms
+from django.apps import apps
 
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponseRedirect
 from AscensionESports_Baseline.models import Dragon_League, Elder_League, Baron_League
 from AscensionESports_Baseline.models import Dragon_Post, Elder_Post, Baron_Post
-
+from AscensionESports_Baseline.models import Baron_Players, Baron_League_Rosters
 
 
 from .forms import (
@@ -28,10 +29,12 @@ def Elder_League_Request(request):
     return league_sheet
 
 def Baron_League_Request(request):
-    league_sheet = Baron_League.objects.all()
+    league_sheet = Baron_League_Rosters.objects.all()
     return league_sheet
 
-
+def Baron_Players_Request(request):
+    players = Baron_Players.objects.all()
+    return players
 
 def getSiteBackground():
     return 'steelblue'
@@ -103,6 +106,8 @@ def about(request):
         }
     )
 
+# News
+#region
 def dragon_news(request):
     all_posts = Dragon_Post.objects.all().order_by('-date')
 
@@ -148,7 +153,7 @@ def baron_news(request):
             'year': datetime.now().year,
         }
     )
-
+#endregion
 
 def dragon(request):
     """Renders the Dragon League Roster page."""
@@ -198,6 +203,41 @@ def baron(request):
         }
     )
 
+def baron_stats(request, name):
+    """Renders the Player Stats page."""
+    assert isinstance(request, HttpRequest)
+    query = Baron_Players.objects.filter(summoner_name=name)
+    
+    return render(
+        request,
+        'AscensionESports_Baseline/player_stats.html',
+        {
+            'background': getBaronBackground(),
+            'color': getBaronColor(),
+            'title':'Baron League Stats',
+            'query_results': query,
+            'year': datetime.now().year,
+        }
+    )
+
+def baron_schedule(request):
+    """Renders the Baron League Roster page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'AscensionESports_Baseline/schedule.html',
+        {
+            'background': getBaronBackground(),
+            'color': getBaronColor(),
+            'title':'Baron League Schedule',
+            'query_results': Baron_League_Request(request),
+            'year': datetime.now().year,
+        }
+    )
+
+# Sign Ups
+#region
 def dragon_league_sign_ups(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -336,3 +376,4 @@ def league_sign_ups(request):
             'year': datetime.now().year,
         }
     )
+#endregion

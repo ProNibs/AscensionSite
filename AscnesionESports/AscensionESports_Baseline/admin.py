@@ -7,15 +7,16 @@ from .models import Dragon_League, Elder_League, Baron_League
 from .models import Baron_Players, Baron_League_Rosters
 from .models import Baron_Match_Report
 from .models import Dragon_Solo_Sign_Ups, Elder_Team_Sign_Ups, Elder_Solo_Sign_Ups, Baron_Team_Sign_Ups
+from .models import League_Track
 
 def resetLeague(modeladmin, request, queryset):
     queryset.update(acronym='TBD')
     queryset.update(team_name='Unnamed Team')
-    queryset.update(top_laner='Top Laner')
-    queryset.update(jungler='Jungler')
-    queryset.update(mid_laner='Mid Laner')
-    queryset.update(ad_carry='AD Carry')
-    queryset.update(support='Support')
+    #queryset.update(top_laner='Top Laner')
+    #queryset.update(jungler='Jungler')
+    #queryset.update(mid_laner='Mid Laner')
+    #queryset.update(ad_carry='AD Carry')
+    #queryset.update(support='Support')
     queryset.update(substitute1='')
     queryset.update(sub1_role='N/A')
     queryset.update(substitute2='')
@@ -58,7 +59,6 @@ class SoloSignUpsAdmin(admin.ModelAdmin):
    
     op_gg_link.short_description = "na.op.gg"
 
-
 class LeaguePlayersAdmin(admin.ModelAdmin):
     list_display = ['summoner_name', 'games_played', 'KDA']
     list_filter = ('primary_role','secondary_role')
@@ -67,14 +67,29 @@ class LeaguePlayersAdmin(admin.ModelAdmin):
             'fields':('summoner_name','primary_role','secondary_role')
         }),
         ("Global Team Stats -- Don't edit unless we fucked up the stats", {
-            'fields':('games_played','mins_played')         
+            'fields':(('games_played','mins_played'),
+                      ('first_bloods','first_tower','largest_multi_kill')
+                      )         
         }),
         ("Player Stats -- Don't edit unless we fucked up the stats", {
             'fields':(('kills','deaths','assists'),
-                      ('creep_score','gold','gold_share'),
-                      ('damage_done','vision_score','crowd_control_score')
+                      ('creep_score','csd_at_ten','gold','gold_share'),
+                      ('damage_done','damage_share'),
+                      ('vision_score','crowd_control_score')
                      )         
         }),
+        ("Calculated Avg. Game Stats -- Don't edit ever (editing above will change these values)", {
+            'fields':(('KDA','avg_kills','avg_deaths','avg_assists'),
+                      ('avg_creep_score','avg_csd_at_ten','avg_gold','avg_gold_share'),
+                      ('avg_damage_done','avg_damage_share'),
+                      ('avg_vision_score','avg_crowd_control_score')
+                     )         
+        }),
+        ("Calculated Per Minute Stats -- Don't edit ever (editing above will change these values)", {
+            'fields':(('creep_score_per_minute','gold_per_minute','damage_done_per_minute'),
+                      ('vision_score_per_minute','crowd_control_score_per_minute')
+                     )         
+        })
         )
 
 class MatchReportAdmin(admin.ModelAdmin):
@@ -89,7 +104,6 @@ class MatchReportAdmin(admin.ModelAdmin):
               ('blue_ad_carry','red_ad_carry'),
               ('blue_support','red_support')]
 
-
 admin.site.site_header = "Ascension Esports Database"
 admin.site.site_title = "It's alright"
 admin.site.index_title = "Ascension Esports Backend"
@@ -101,6 +115,8 @@ admin.site.register(Baron_Match_Report,MatchReportAdmin)
 admin.site.register(Dragon_League, LeagueAdmin)
 admin.site.register(Elder_League, LeagueAdmin)
 admin.site.register(Baron_League, LeagueAdmin)
+
+admin.site.register(League_Track)
 
 admin.site.register(Dragon_Solo_Sign_Ups, SoloSignUpsAdmin)
 admin.site.register(Elder_Solo_Sign_Ups, SoloSignUpsAdmin)

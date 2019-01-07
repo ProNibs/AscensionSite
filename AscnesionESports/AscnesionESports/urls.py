@@ -13,7 +13,8 @@ import AscensionESports_Baseline.views
 from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
-
+#url(r'^Baron Stats$', AscensionESports_Baseline.views.Player_Stats, name='baron_stats'),
+    
 urlpatterns = [
     # Examples:
     url(r'^$', AscensionESports_Baseline.views.home, name='home'),
@@ -57,5 +58,9 @@ urlpatterns = [
 
     # Uncomment the next line to enable the admin:
     url(r'^AEadmin/', include(admin.site.urls)),
+    url(r'^Baron League/Player/([-\w\ ]+)/$', AscensionESports_Baseline.views.baron_stats, name='baron_stats'),
+    url(r'^Baron League/Schedule$', AscensionESports_Baseline.views.baron_schedule, name='baron_schedule'),
+    
+
 ]
 

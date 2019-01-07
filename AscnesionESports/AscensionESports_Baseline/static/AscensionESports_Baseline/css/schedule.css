@@ -1,0 +1,16 @@
+.btn {
+    text-align: center;
+    opacity: 0.8;
+    color: white;
+    background-color: black;
+}
+
+.btn:hover {
+    opacity: 0.5;
+    color: white;
+}
+
+.btn:active, a.focus {
+    opacity: 0.3;
+    color: white;
+}

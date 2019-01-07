@@ -1,0 +1,37 @@
+﻿{% extends "AscensionESports_Baseline/layout.html" %}
+
+{% block content %}
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AscensionESports_Baseline/css/contact_us.css' %}" />
+</head>
+
+<h2>{{ title }}</h2>
+{% for item in query_results %}
+    <h3>Player Name: {{ item.summoner_name }}</h3>
+    <h3>Primary Role: {{ item.primary_role }}</h3>
+    <h3>Secondary role: {{ item.secondary_role }}</h3>
+    <div class="Stats">
+        <div class="row background spacer">
+            <p class="col-md-3"><b>Games Played:</b> {{ item.games_played }}</p>
+            <p class="col-md-3"><b>KDA:</b> {{ item.KDA }}</p>
+            <p class="col-md-3"><b>Average CSD @ 10:</b> {{ item.avg_csd_at_ten }}</p>
+            <p class="col-md-3"><b>Average Vision Score:</b> {{ item.avg_vision_score }}</p>
+        </div>
+        <div class="row background spacer">
+            <p class="col-md-3"><b>Average Gold Share:</b> {{ item.avg_gold_share }}</p>
+            <p class="col-md-3"><b>Average Damage Share:</b> {{ item.avg_damage_share }}</p>
+            <p class="col-md-3"><b>Average Damage Done:</b> {{ item.avg_damage_done }} </p>
+            <p class="col-md-3"><b>Average Crowd Control Score:</b> {{ item.avg_crowd_control_score }}</p>
+        </div>
+        <div class="row background spacer spacer_bottom_only">
+            <p class="col-md-3"><b>Gold Per Minute:</b> {{ item.gold_per_minute }}</p>
+            <p class="col-md-3"><b>Damage Per Minute:</b> {{ item.damage_done_per_minute }}</p>
+            <p class="col-md-3"><b>Vision Score Per Minute:</b> {{ item.vision_score_per_minute }} </p>
+            <p class="col-md-3"><b>Crowd Control Score Per Minute:</b> {{ item.crowd_control_score_per_minute }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

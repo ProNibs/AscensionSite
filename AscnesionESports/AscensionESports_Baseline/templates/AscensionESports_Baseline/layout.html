@@ -37,7 +37,7 @@
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dragon League (B/S)
+                            Dragon League (I/B/S)
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a href="{% url 'dragon_news' %}">News</a></li>
@@ -63,14 +63,17 @@
                             <li><a href="{% url 'elder' %}">Standings</a></li>
                         </ul>
                     </li>
+                    <!-- BARON STUFF THAT IS NOT USED ANYMORE -->
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Baron League (D+)
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a href="{% url 'baron_news' %}">News</a></li>
-                            <li><a href="{% url 'baron_league_sign_ups' %}">Sign-Ups</a></li>                            
+                            <li><a href="{% url 'baron_league_sign_ups' %}">Sign-Ups</a></li>  
                             <li><a href="{% url 'baron' %}">Rosters</a></li>
+                            <li><a href="{% url 'baron_schedule' %}">Schedule</a></li>
                             <li><a href="{% url 'baron' %}">Standings</a></li>
                         </ul>
                     </li>
@@ -98,7 +101,7 @@
                     <div class="img_container"><a href="https://www.twitch.tv/aesports_gg/"><img src="{% static 'AscensionESports_Baseline/content/twitch-icon.png' %}" /></a></div>
                     <div class="img_container"><a href="https://twitter.com/AeSports_GG"><img src="{% static 'AscensionESports_Baseline/content/twitter-icon.png' %}" /></a></div>
                     <div class="img_container"><a href="https://www.youtube.com/channel/UC1VbIEV5Xh4Nys72AjOY1mA"><img src="{% static 'AscensionESports_Baseline/content/youtube-icon.png' %}" /></a></div>
-                    <div class="img_container"><a href="mailto:ascensionesports@gmail.com"><img src="{% static 'AscensionESports_Baseline/content/email-icon.png' %}"></img></a></div>
+                    <div class="img_container"><a href="mailto:ascensionesports@gmail.com"><img src="{% static 'AscensionESports_Baseline/content/email-icon.png' %}" /></a></div>
                 </div>
             </div>
         </div>
