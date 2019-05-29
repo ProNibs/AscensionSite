@@ -5,6 +5,7 @@ Definition of models.
 from django.db import models
 from django.urls import reverse
 import datetime
+import random
 
 Positions = (('Top', 'Top'),('Jungle', 'Jungle'),('Mid', 'Mid'),('ADC', 'ADC'),('Support','Support'),('Substitute','Substitute'),
              ('Pending-Top','Pending-Top'), ('Pending-Jgl','Pending-Jgl'), ('Pending-Mid','Pending-Mid'),
@@ -511,7 +512,7 @@ class Baron_Match_Report(Report_Match):
     class Meta:
         unique_together = ('blue_team','red_team','match_time')
         db_table = "Baron Match Report"
-        verbose_name_plural = "Baron Match Report"
+        verbose_name_plural = "Baron Match Reports"
 
 #endregion
 
@@ -642,20 +643,35 @@ class Start_League(models.Model):
                 return 0
             else:   # 9-week schedule with Bo2/Bo3 in single round robin
                 for round in round_robin_list:
+                    week += 1
                     for match in round:
-                        game += 1
-                        tmp = datetime.timedelta(days=7*(week-1))
+                        game = 1
+                        day_delta = datetime.timedelta(days=7*(week-1))
                         self.match_report_instance.objects.create(
                             blue_team=match[0],
                             red_team=match[1], 
                             week_number=week,
                             game_number=game,
-                            match_time=(self.start_date + tmp)
+                            match_time=(self.start_date + day_delta)
                             )
 
-                        if game is len(round_robin_list[0]):
-                            game = 0
-                            week += 1
+                        # Do second for 2nd game in Bo2
+                        self.match_report_instance.objects.create(
+                            blue_team=match[1],
+                            red_team=match[0], 
+                            week_number=week,
+                            game_number=game+1,
+                            match_time=(self.start_date + day_delta + time_delta)
+                            )
+                        if self.regular_season_schedule is 3:   # it's Bo3
+                            # Blue/Red side evennness already done when creating the initial round-robin.
+                            self.match_report_instance.objects.create(
+                                blue_team=match[0],
+                                red_team=match[1], 
+                                week_number=week,
+                                game_number=game+2,
+                                match_time=(self.start_date + day_delta + time_delta*2)
+                                )
                 return 0
         elif self.week_length is 5: # Shortened 5-week schedule, single round robin
             return 0
