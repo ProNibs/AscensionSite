@@ -327,45 +327,45 @@ class Elder_League_Rosters(A_League):
         verbose_name_plural = "Elder Rosters"
 
 
-class Baron_League_Rosters(A_League):
-    top_laner = models.OneToOneField(
+class Baron_League_Rosters(A_League):   # Foreign Key because Match Report references it too
+    top_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="top_laner"
         )
-    jungler = models.OneToOneField(
+    jungler = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="jungler"
         )
-    mid_laner = models.OneToOneField(
+    mid_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="mid_laner"
         )
-    ad_carry = models.OneToOneField(
+    ad_carry = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="ad_carry"
         )
-    support = models.OneToOneField(
+    support = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="support"
         )
-    substitute1 = models.OneToOneField(
+    substitute1 = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="substitute1",
         blank=True, null=True
         )
-    substitute2 = models.OneToOneField(
+    substitute2 = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="substitute2",
         blank=True, null=True
         )
-    substitute3 = models.OneToOneField(
+    substitute3 = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="substitute3",
@@ -389,28 +389,28 @@ class Report_Match(models.Model):
     did_blue_win = models.BooleanField(default=True, help_text="DOUBLE CHECK THIS")
     week_number = models.PositiveIntegerField(default=1)
     game_number = models.PositiveIntegerField(help_text="In BoX series, it's game number. Otherwise, game number for a given week")
-    date = models.DateField()
+    match_time = models.DateTimeField(help_text='Put in your timezone')
+    
+    blue_top_laner = models.CharField(max_length=32, blank=True, null=True)
+    blue_jungler = models.CharField(max_length=32, blank=True, null=True)
+    blue_mid_laner = models.CharField(max_length=32, blank=True, null=True)
+    blue_ad_carry = models.CharField(max_length=32, blank=True, null=True)
+    blue_support = models.CharField(max_length=32, blank=True, null=True)
 
-    blue_top_laner = models.CharField(max_length=32, blank=True)
-    blue_jungler = models.CharField(max_length=32, blank=True)
-    blue_mid_laner = models.CharField(max_length=32, blank=True)
-    blue_ad_carry = models.CharField(max_length=32, blank=True)
-    blue_support = models.CharField(max_length=32, blank=True)
-
-    red_top_laner = models.CharField(max_length=32, blank=True)
-    red_jungler = models.CharField(max_length=32, blank=True)
-    red_mid_laner = models.CharField(max_length=32, blank=True)
-    red_ad_carry = models.CharField(max_length=32, blank=True)
-    red_support = models.CharField(max_length=32, blank=True)
+    red_top_laner = models.CharField(max_length=32, blank=True, null=True)
+    red_jungler = models.CharField(max_length=32, blank=True, null=True)
+    red_mid_laner = models.CharField(max_length=32, blank=True, null=True)
+    red_ad_carry = models.CharField(max_length=32, blank=True, null=True)
+    red_support = models.CharField(max_length=32, blank=True, null=True)
 
     def __str__(self):
-        return str(self.match_id)
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse('model-detail-view', args=[str(self.id)])
 
     class Meta:
-        unique_together = ('blue_team','red_team','date')
+        unique_together = ('blue_team','red_team','match_time')
         db_table = "A Single Match"
         abstract = True
 
@@ -429,32 +429,32 @@ class Baron_Match_Report(Report_Match):
         related_name="red_team",
         blank=True, null=True
         )
-
-    blue_top_laner = models.OneToOneField(
+    
+    blue_top_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="blue_top_laner",
         blank=True, null=True
         )
-    blue_jungler = models.OneToOneField(
+    blue_jungler = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="blue_jungler",
         blank=True, null=True
         )
-    blue_mid_laner = models.OneToOneField(
+    blue_mid_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="blue_mid_laner",
         blank=True, null=True
         )
-    blue_ad_carry = models.OneToOneField(
+    blue_ad_carry = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="blue_ad_carry",
         blank=True, null=True
         )
-    blue_support = models.OneToOneField(
+    blue_support = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="blue_support",
@@ -462,31 +462,31 @@ class Baron_Match_Report(Report_Match):
         )
 
 
-    red_top_laner = models.OneToOneField(
+    red_top_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="red_top_laner",
         blank=True, null=True
         )
-    red_jungler = models.OneToOneField(
+    red_jungler = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="red_jungler",
         blank=True, null=True
         )
-    red_mid_laner = models.OneToOneField(
+    red_mid_laner = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="red_mid_laner",
         blank=True, null=True
         )
-    red_ad_carry = models.OneToOneField(
+    red_ad_carry = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="red_ad_carry",
         blank=True, null=True
         )
-    red_support = models.OneToOneField(
+    red_support = models.ForeignKey(
         Baron_Players,
         on_delete=models.CASCADE,
         related_name="red_support",
@@ -496,6 +496,7 @@ class Baron_Match_Report(Report_Match):
 
     def save(self, *args, **kwargs):    # Get team stats here
         super(Baron_Match_Report, self).save(*args, **kwargs)
+        '''         #THIS FUCKER RUINS FOREIGN KEY SHIT UGH
         if self.did_blue_win:
             self.blue_team.wins += 1
             self.red_team.losses += 1
@@ -503,12 +504,12 @@ class Baron_Match_Report(Report_Match):
             self.blue_team.losses += 1
             self.red_team.wins += 1
 
-        #self.blue_team.save(*args, **kwargs)
-        #self.red_team.save(*args, **kwargs)
-        
+        self.blue_team.save(*args, **kwargs)
+        self.red_team.save(*args, **kwargs)
+        '''
 
     class Meta:
-        unique_together = ('blue_team','red_team','date')
+        unique_together = ('blue_team','red_team','match_time')
         db_table = "Baron Match Report"
         verbose_name_plural = "Baron Match Report"
 
@@ -523,7 +524,7 @@ series_choices = ((1,'Bo1'),(2,'Bo2'),(3,'Bo3'))
 class Start_League(models.Model):
     league_name = models.CharField(max_length=50, default='Dragon League X')
     league = models.CharField(max_length=50, choices=Leagues)
-    start_date = models.DateField()
+    start_date = models.DateTimeField()
     week_length = models.PositiveIntegerField(default=9, choices=common_weeks)
     regular_season_schedule = models.PositiveIntegerField(default=1, choices=series_choices)
     number_of_teams = models.PositiveIntegerField(default=10, help_text='This is always assumed to be 10')
@@ -552,9 +553,6 @@ class Start_League(models.Model):
         #self.team = models.ForeignKey(self.temp_value, on_delete=models.CASCADE, related_name='rosters', limit_choices_to={'is_active': True})
         #self.match_report = models.ForeignKey(self.temp_value, on_delete=models.CASCADE, related_name='match_report')
         print(self.start_date, type(self.start_date))
-        # 
-        #print(self.league_instance[0])
-        #print(self.team.team_name.all())
 
     def check_for_bye(self, list):  # Only need this for stand-alone testing
         if len(list) % 2 == 1:
@@ -588,7 +586,7 @@ class Start_League(models.Model):
             s += [week_list]
         return s
 
-    def double_round_robin(self, round_robin_list):
+    def create_double_round_robin(self, round_robin_list):
         new_list = []
         for round in round_robin_list:
             week_list = []
@@ -608,28 +606,56 @@ class Start_League(models.Model):
     def create_league(self):
         self.team_list = self.league_instance
         round_robin_list = self.create_round_robin(self.team_list)
+        double_round_robin = self.create_double_round_robin(round_robin_list)
+        time_delta = datetime.timedelta(hours=1)
         game = 0
-        week = 1
+        week = 0
+        first_game_tonight = False  # Check below will flip it back for first game
         if self.week_length is 9: # 9-week schedule
-            if self.regular_season_schedule is 1:   #Bo1, double round robin
+            if self.regular_season_schedule is 1:   #Bo1, round robin, two games a night
+                for round in double_round_robin:
+                    game = 1
+                    if first_game_tonight:
+                        first_game_tonight = False
+                    else:
+                        week += 1
+                        first_game_tonight = True
+                    print('------------')
+                    for match in round:
+                        #print('Match', match)
+                        day_delta = datetime.timedelta(days=7*(week-1))
+                        new_time = None
+                        if first_game_tonight == False:
+                            new_time = self.start_date + day_delta + time_delta
+                        else:
+                            new_time = self.start_date + day_delta
+                        
+                        self.match_report_instance.objects.create(
+                            blue_team=match[0],
+                            red_team=match[1], 
+                            week_number=week,
+                            game_number=game,
+                            match_time=new_time
+                            )
+                        print('new self time',new_time)
+                        print('old self time', self.start_date)
+                return 0
+            else:   # 9-week schedule with Bo2/Bo3 in single round robin
                 for round in round_robin_list:
                     for match in round:
                         game += 1
                         tmp = datetime.timedelta(days=7*(week-1))
-                        print('Match',match,' Type',type(match[0]))
                         self.match_report_instance.objects.create(
                             blue_team=match[0],
-                            red_team=match[1],
+                            red_team=match[1], 
                             week_number=week,
                             game_number=game,
-                            date=(self.start_date + tmp)
+                            match_time=(self.start_date + tmp)
                             )
 
                         if game is len(round_robin_list[0]):
                             game = 0
                             week += 1
-                return 0
-            else:   # 9-week schedule with Bo2/Bo3 is single round robin
                 return 0
         elif self.week_length is 5: # Shortened 5-week schedule, single round robin
             return 0

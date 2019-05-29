@@ -130,13 +130,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Chicago'
+#TIME_ZONE = 'America/Chicago'
 
-USE_I18N = True
+USE_I18N = False # Causes the admin-side errors
 
 USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True  # Extra buggy for some reason
 
 
 # Static files (CSS, JavaScript, Images)
