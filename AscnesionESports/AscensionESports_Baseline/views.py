@@ -9,10 +9,11 @@ from django.apps import apps
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponseRedirect
-from AscensionESports_Baseline.models import Dragon_League, Elder_League, Baron_League
+#from AscensionESports_Baseline.models import Dragon_League, Elder_League, Baron_League
 from AscensionESports_Baseline.models import Dragon_Post, Elder_Post, Baron_Post
+from AscensionESports_Baseline.models import Dragon_Players, Dragon_League_Rosters
+from AscensionESports_Baseline.models import Elder_Players, Elder_League_Rosters
 from AscensionESports_Baseline.models import Baron_Players, Baron_League_Rosters
-
 
 from .forms import (
     Dragon_League_Signup_Form, Elder_League_Solo_Signup_Form, Elder_League_Team_Signup_Form, Baron_League_Signup_Form
@@ -21,15 +22,15 @@ from .forms import (
 from datetime import datetime
 
 def Dragon_League_Request(request):
-    league_sheet = Dragon_League.objects.all()
+    league_sheet = Dragon_League_Rosters.objects.filter(is_active=True)
     return league_sheet
 
 def Elder_League_Request(request):
-    league_sheet = Elder_League.objects.all()
+    league_sheet = Elder_League_Rosters.objects.filter(is_active=True)
     return league_sheet
 
 def Baron_League_Request(request):
-    league_sheet = Baron_League_Rosters.objects.all()
+    league_sheet = Baron_League_Rosters.objects.filter(is_active=True)
     return league_sheet
 
 def Baron_Players_Request(request):

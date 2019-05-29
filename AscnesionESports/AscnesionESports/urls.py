@@ -61,6 +61,5 @@ urlpatterns = [
     url(r'^Baron League/Player/([-\w\ ]+)/$', AscensionESports_Baseline.views.baron_stats, name='baron_stats'),
     url(r'^Baron League/Schedule$', AscensionESports_Baseline.views.baron_schedule, name='baron_schedule'),
     
-
 ]
 

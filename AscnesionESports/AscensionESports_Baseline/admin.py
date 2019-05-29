@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Dragon_Post, Elder_Post, Baron_Post
-from .models import Dragon_League, Elder_League, Baron_League
+from .models import Dragon_League_Rosters, Elder_League_Rosters, Baron_League_Rosters
 #from .models import Dragon_Standings, Elder_Standings, Baron_Standings
-from .models import Baron_Players, Baron_League_Rosters
+from .models import Baron_Players
 from .models import Baron_Match_Report
 from .models import Dragon_Solo_Sign_Ups, Elder_Team_Sign_Ups, Elder_Solo_Sign_Ups, Baron_Team_Sign_Ups
-from .models import League_Track
+from .models import Start_League
 
 def resetLeague(modeladmin, request, queryset):
     queryset.update(acronym='TBD')
@@ -93,9 +93,9 @@ class LeaguePlayersAdmin(admin.ModelAdmin):
         )
 
 class MatchReportAdmin(admin.ModelAdmin):
-    list_display = ['game_number', 'blue_team', 'red_team']
-    ordering = ['game_number']
-    fields = [('match_id','week_number','game_number'),
+    list_display = ['date', 'game_number', 'blue_team', 'red_team']
+    ordering = ['date', 'game_number']
+    fields = [('match_id','week_number','game_number','date'),
               ('did_blue_win'),
               ('blue_team','red_team'),
               ('blue_top_laner','red_top_laner'),
@@ -104,19 +104,19 @@ class MatchReportAdmin(admin.ModelAdmin):
               ('blue_ad_carry','red_ad_carry'),
               ('blue_support','red_support')]
 
+
 admin.site.site_header = "Ascension Esports Database"
 admin.site.site_title = "It's alright"
 admin.site.index_title = "Ascension Esports Backend"
 
 admin.site.register(Baron_Players,LeaguePlayersAdmin)
-admin.site.register(Baron_League_Rosters, LeagueAdmin)
 admin.site.register(Baron_Match_Report,MatchReportAdmin)
 
-admin.site.register(Dragon_League, LeagueAdmin)
-admin.site.register(Elder_League, LeagueAdmin)
-admin.site.register(Baron_League, LeagueAdmin)
+admin.site.register(Dragon_League_Rosters, LeagueAdmin)
+admin.site.register(Elder_League_Rosters, LeagueAdmin)
+admin.site.register(Baron_League_Rosters, LeagueAdmin)
 
-admin.site.register(League_Track)
+admin.site.register(Start_League)
 
 admin.site.register(Dragon_Solo_Sign_Ups, SoloSignUpsAdmin)
 admin.site.register(Elder_Solo_Sign_Ups, SoloSignUpsAdmin)

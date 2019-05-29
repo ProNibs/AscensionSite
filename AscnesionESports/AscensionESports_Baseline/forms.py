@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from captcha.fields import ReCaptchaField   
-from django.db.models import Q
+#from django.db.models import Q
 
 from .models import (
     Dragon_Solo_Sign_Ups, Elder_Solo_Sign_Ups, Elder_Team_Sign_Ups ,Baron_Team_Sign_Ups,
