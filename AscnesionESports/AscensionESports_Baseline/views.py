@@ -9,11 +9,17 @@ from django.apps import apps
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
 #from AscensionESports_Baseline.models import Dragon_League, Elder_League, Baron_League
 from AscensionESports_Baseline.models import Dragon_Post, Elder_Post, Baron_Post
 from AscensionESports_Baseline.models import Dragon_Players, Dragon_League_Rosters
 from AscensionESports_Baseline.models import Elder_Players, Elder_League_Rosters
 from AscensionESports_Baseline.models import Baron_Players, Baron_League_Rosters
+from AscensionESports_Baseline.models import BadAccounts
+
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .forms import (
     Dragon_League_Signup_Form, Elder_League_Solo_Signup_Form, Elder_League_Team_Signup_Form, Baron_League_Signup_Form
@@ -36,6 +42,11 @@ def Baron_League_Request(request):
 def Baron_Players_Request(request):
     players = Baron_Players.objects.all()
     return players
+
+def Bad_Players_Request(request):
+    names = BadAccounts.objects.all().values_list('summoner_name')
+    return json.dumps(list(names), ensure_ascii=False, cls=DjangoJSONEncoder)
+
 
 def getSiteBackground():
     return 'steelblue'
@@ -378,3 +389,20 @@ def league_sign_ups(request):
         }
     )
 #endregion
+
+@login_required
+def check_for_bad_accounts(request):
+    """Renders the check for bad accounts page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'AscensionESports_Baseline/check_for_bad_accounts.html',
+        {
+            'background': getSiteBackground(),
+            'color': getSiteColor(),
+            'title':'Check for Bad Accounts',
+            'query_results' : Bad_Players_Request(request), 
+            'year': datetime.now().year,
+        }
+    )

@@ -8,6 +8,7 @@ from .models import Baron_Players
 from .models import Baron_Match_Report
 from .models import Dragon_Solo_Sign_Ups, Elder_Team_Sign_Ups, Elder_Solo_Sign_Ups, Baron_Team_Sign_Ups
 from .models import Start_League
+from .models import BadAccounts
 
 def resetLeague(modeladmin, request, queryset):
     queryset.update(acronym='TBD')
@@ -105,6 +106,17 @@ class MatchReportAdmin(admin.ModelAdmin):
               ('blue_support','red_support')]
 
 
+class BadAccountsAdmin(admin.ModelAdmin):
+    list_display = ['summoner_name','discord_name','who_added_person','reason_for_ban','time_added']
+    list_filter = [('reason_for_ban')]
+    ordering = ['time_added']
+    fields = [ ('summoner_name','discord_name','summoner_id'),
+               ('who_added_person','reason_for_ban'),
+               ('supporting_documentation')
+              ]
+
+
+
 admin.site.site_header = "Ascension Esports Database"
 admin.site.site_title = "It's alright"
 admin.site.index_title = "Ascension Esports Backend"
@@ -126,3 +138,5 @@ admin.site.register(Baron_Team_Sign_Ups, TeamSignUpsAdmin)
 admin.site.register(Dragon_Post)
 admin.site.register(Elder_Post)
 admin.site.register(Baron_Post)
+
+admin.site.register(BadAccounts, BadAccountsAdmin)

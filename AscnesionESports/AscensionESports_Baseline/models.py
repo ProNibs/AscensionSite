@@ -17,7 +17,7 @@ Leagues = (('Dragon', 'Dragon'),('Elder', 'Elder'),('Baron','Baron'))
 
 Side_Choices = (('Blue','Blue'),('Red','Red'))
 
-
+Ban_Options = (('Account sharing','Account sharing'),('Smurfing','Smurfing'),('Toxic','Toxic'),('Other','Other'))
 
 # Create your models here.
 class A_League(models.Model):
@@ -638,8 +638,6 @@ class Start_League(models.Model):
                             game_number=game,
                             match_time=new_time
                             )
-                        print('new self time',new_time)
-                        print('old self time', self.start_date)
                 return 0
             else:   # 9-week schedule with Bo2/Bo3 in single round robin
                 for round in round_robin_list:
@@ -767,3 +765,24 @@ class Baron_Post(Post):
         db_table = "Baron News"
         verbose_name_plural = "Baron News"
 #endregion
+
+
+class BadAccounts(models.Model):
+    summoner_name = models.CharField(max_length=64)
+    summoner_id = models.PositiveIntegerField()
+    discord_name = models.CharField(max_length=30)
+    time_added = models.DateTimeField(auto_now_add=True)
+    who_added_person = models.CharField(max_length=64)
+    reason_for_ban = models.CharField(max_length=20,choices=Ban_Options)
+    supporting_documentation = models.TextField()
+
+    def getOPGGLink(self):
+        final_query = 'http://na.op.gg/summoner/userName=' + str(self.summoner_name)
+        return final_query
+
+    def __str__(self):
+        return self.summoner_name
+
+    class Meta:
+        db_table = "Bad Accounts"
+        verbose_name_plural = "Bad Accounts"

@@ -77,6 +77,9 @@
                             <li><a href="{% url 'baron' %}">Standings</a></li>
                         </ul>
                     </li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'check_for_bad_accounts' %}">Smurf Check</a></li>
+                    {% endif %}
                 </ul>
                 {% include 'AscensionESports_Baseline/loginpartial.html' %}
             </div>

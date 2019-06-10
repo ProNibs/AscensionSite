@@ -1,0 +1,60 @@
+﻿{% extends "AscensionESports_Baseline/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+
+    <p>Select local CSV file</p>
+    <input id="csv" type="file" />
+
+    <br />
+
+    <p id="output"></p>
+
+    <p>{{ query_results | safe | escapejs }}</p>
+
+<script type="text/javascript">
+    var name_list = ( ("{{ query_results | safe | escapejs }}").replace( /&(l|g|quo)t;/g, function(a,b){
+            return {
+                l   : '<',
+                g   : '>',
+                quo : '"'
+            }[b];
+        }));
+    name_list = name_list.replace(/u'/g, '\'');
+    name_list = name_list.replace(/'/g, '\"');    
+    
+
+    var name_data = JSON.parse(name_list);
+    var name_data_list = [];
+    for (var i=0; i<name_data.length; i++){
+        name_data_list[i] = name_data[i][0];
+    }
+
+    function readSingleFile(evt) {
+        var f = evt.target.files[0];
+        if (f) {
+            var r = new FileReader();
+            r.onload = function (e) {
+                var contents = e.target.result;
+                var lines = contents.split(","), output = [];
+                
+                for (var i = 0; i < lines.length; i++) {
+                    console.log(name_data_list);
+                    console.log(lines[i]);
+                    if (name_data_list.includes(lines[i])) {
+                        output.push("<tr><td>" + lines[i].toString() + "</td></tr>");
+                    }
+                }
+                output = "<table><tr><td>Bad accounts</td></tr>" + output.join("") + "</table>";
+                document.getElementById("output").innerHTML = output;
+            }
+            r.readAsText(f);
+            document.getElementById("output").innerHTML = output;
+        } else {
+            alert("Failed to load file");
+        }
+    }
+    document.getElementById('csv').addEventListener('change', readSingleFile);
+
+</script>
+{% endblock %}
