@@ -80,6 +80,7 @@
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\twitter-icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\content\youtube-icon.png" />
     <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\css\schedule.css" />
+    <Content Include="AscensionESports_Baseline\static\AscensionESports_Baseline\scripts\Schedule.js" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\check_for_bad_accounts.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\central_league_sign_ups.html" />
     <Content Include="AscensionESports_Baseline\templates\AscensionESports_Baseline\news.html" />

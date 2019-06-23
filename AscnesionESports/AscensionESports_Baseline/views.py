@@ -1,6 +1,7 @@
 """
 Definition of views.
 """
+from datetime import datetime
 
 from django.conf import settings
 from django import forms
@@ -15,8 +16,8 @@ from django.contrib.auth.decorators import login_required
 from AscensionESports_Baseline.models import Dragon_Post, Elder_Post, Baron_Post
 from AscensionESports_Baseline.models import Dragon_Players, Dragon_League_Rosters
 from AscensionESports_Baseline.models import Elder_Players, Elder_League_Rosters
-from AscensionESports_Baseline.models import Baron_Players, Baron_League_Rosters
-from AscensionESports_Baseline.models import BadAccounts
+from AscensionESports_Baseline.models import Baron_Players, Baron_League_Rosters, Baron_Match_Report
+from AscensionESports_Baseline.models import BadAccounts, Start_League
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -42,6 +43,17 @@ def Baron_League_Request(request):
 def Baron_Players_Request(request):
     players = Baron_Players.objects.all()
     return players
+
+def Baron_Match_Report_Request(request):    # Need to give schedule html only the latest schedule, not everything
+    start_league = Start_League.objects.filter(league='Baron')
+    date = None
+    for start_league_object in start_league:    # Assumption: A League won't overlap itself
+        if (date == None) or (start_league_object.start_date >= date):
+            date = start_league_object.start_date
+    if date == None:    # In the case a League has never been started
+        date = datetime.now()
+    schedule = Baron_Match_Report.objects.filter(match_time__gte=date)
+    return schedule
 
 def Bad_Players_Request(request):
     names = BadAccounts.objects.all().values_list('summoner_name')
@@ -243,7 +255,7 @@ def baron_schedule(request):
             'background': getBaronBackground(),
             'color': getBaronColor(),
             'title':'Baron League Schedule',
-            'query_results': Baron_League_Request(request),
+            'query_results': Baron_Match_Report_Request(request),
             'year': datetime.now().year,
         }
     )

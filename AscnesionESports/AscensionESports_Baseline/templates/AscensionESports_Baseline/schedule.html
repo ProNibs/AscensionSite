@@ -9,21 +9,40 @@
 
 <h2>{{ title }}</h2>
 <div class="btn-group btn-group-justified" role="group">
-    <a role="button" class="btn btn-dark disabled" id="Week">Week</a>
-    <a role="button" class="btn btn-dark focus" id="b1">1</a>
-    <a role="button" class="btn btn-dark" id="b2">2</a>
-    <a role="button" class="btn btn-dark" id="b3">3</a>
-    <a role="button" class="btn btn-dark" id="b4">4</a>
-    <a role="button" class="btn btn-dark" id="b5">5</a>
-    <a role="button" class="btn btn-dark" id="b6">6</a>
-    <a role="button" class="btn btn-dark" id="b7">7</a>
-    <a role="button" class="btn btn-dark" id="b8">8</a>
-    <a type="button" class="btn btn-dark" id="b9">9</a>
+
 </div>
 
-{% for item in query_results %}
-    <p>{{ item }}</p>
-{% endfor %}
+
+<div id="Schedule">
+    <table style="width:100%">
+    <tr class="header">
+        <th>Time</th>
+        <th>Blue Side</th>
+        <th>Red Side</th>
+        <th>Winner</th>
+    </tr>
+    
+    {% for item in query_results %}
+    <tr class="match_report">
+        <td class="time">{{ item.match_time }}</td>
+        <td class="blue_team">{{ item.blue_team }}</td>
+        <td class="red_team">{{ item.red_team }}</td>
+        <td class="winning_team">{{ item.winning_team_name }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
 
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript"> 
+    var match_times = [];
+    {% for item in query_results %}
+        match_times.push("{{ item.match_time }}");
+    {% endfor %}
+</script>
+
+<script src="{% static 'AscensionESports_Baseline/scripts/Schedule.js' %}"></script>
 {% endblock %}

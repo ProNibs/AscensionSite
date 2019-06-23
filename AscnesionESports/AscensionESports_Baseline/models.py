@@ -17,7 +17,7 @@ Leagues = (('Dragon', 'Dragon'),('Elder', 'Elder'),('Baron','Baron'))
 
 Side_Choices = (('Blue','Blue'),('Red','Red'))
 
-Ban_Options = (('Account sharing','Account sharing'),('Smurfing','Smurfing'),('Toxic','Toxic'),('Other','Other'))
+Ban_Options = (('Account sharing inside League Play','Account sharing inside League Play'),('Account sharing outside League Play','Account sharing outisde League Play'),('Smurfing','Smurfing'),('Toxic','Toxic'),('Other','Other'))
 
 # Create your models here.
 class A_League(models.Model):
@@ -410,6 +410,11 @@ class Report_Match(models.Model):
     def get_absolute_url(self):
         return reverse('model-detail-view', args=[str(self.id)])
 
+    def winning_team_name(self):
+        if self.did_blue_win:
+            return self.blue_team
+        return self.red_team
+
     class Meta:
         unique_together = ('blue_team','red_team','match_time')
         db_table = "A Single Match"
@@ -519,7 +524,7 @@ class Baron_Match_Report(Report_Match):
 # Global League Tracking Table
 # Once created, will create matches that link back to this creation.
 # Will pull all active rosters in a League
-common_weeks = ((5,5),(9,9))
+common_weeks = ((4,4),(5,5),(7,7),(9,9))
 series_choices = ((1,'Bo1'),(2,'Bo2'),(3,'Bo3'))
 
 class Start_League(models.Model):
@@ -528,7 +533,7 @@ class Start_League(models.Model):
     start_date = models.DateTimeField()
     week_length = models.PositiveIntegerField(default=9, choices=common_weeks)
     regular_season_schedule = models.PositiveIntegerField(default=1, choices=series_choices)
-    number_of_teams = models.PositiveIntegerField(default=10, help_text='This is always assumed to be 10')
+    number_of_teams = models.PositiveIntegerField(default=10, help_text='This is always assumed to be 10. This is only used for the pools.')
     pools = models.PositiveIntegerField(default=1, help_text='In case we got multiple Elder Leagues again')
     
     # Constants used to create schedules
@@ -543,18 +548,15 @@ class Start_League(models.Model):
         self.match_report_instance = None
         self.team = None
         if self.league == 'Dragon':
-            pass
-            #self.league_instance = Dragon_League
+            self.league_instance = Dragon_League_Rosters.objects.filter(is_active=True)
+            self.match_report_instance = Baron_Match_Report #TODO: Still Baron Match Report
         elif self.league == 'Elder':
             pass
             #self.league_instance = Elder_League
         elif self.league == 'Baron':
             self.league_instance = Baron_League_Rosters.objects.filter(is_active=True)
             self.match_report_instance = Baron_Match_Report
-        #self.team = models.ForeignKey(self.temp_value, on_delete=models.CASCADE, related_name='rosters', limit_choices_to={'is_active': True})
-        #self.match_report = models.ForeignKey(self.temp_value, on_delete=models.CASCADE, related_name='match_report')
-        print(self.start_date, type(self.start_date))
-
+        
     def check_for_bye(self, list):  # Only need this for stand-alone testing
         if len(list) % 2 == 1:
             list += ['BYE']
@@ -597,7 +599,7 @@ class Start_League(models.Model):
         return round_robin_list + new_list
     
     def check_league_for_teams(self):   # Check to ensure enough active rosters exist
-        if len(self.league_instance) == number_of_teams:
+        if len(self.league_instance) == self.number_of_teams:
             return True
         else:
             print('Wrong number of teams')
@@ -607,75 +609,73 @@ class Start_League(models.Model):
     def create_league(self):
         self.team_list = self.league_instance
         round_robin_list = self.create_round_robin(self.team_list)
-        double_round_robin = self.create_double_round_robin(round_robin_list)
+        if (self.regular_season_schedule is 1) and (len(self.league_instance)/2 < self.week_length):
+            round_robin_list = self.create_double_round_robin(round_robin_list)
         time_delta = datetime.timedelta(hours=1)
         game = 0
         week = 0
         first_game_tonight = False  # Check below will flip it back for first game
-        if self.week_length is 9: # 9-week schedule
-            if self.regular_season_schedule is 1:   #Bo1, round robin, two games a night
-                for round in double_round_robin:
-                    game = 1
-                    if first_game_tonight:
-                        first_game_tonight = False
-                    else:
-                        week += 1
-                        first_game_tonight = True
-                    print('------------')
-                    for match in round:
-                        #print('Match', match)
-                        day_delta = datetime.timedelta(days=7*(week-1))
-                        new_time = None
-                        if first_game_tonight == False:
-                            new_time = self.start_date + day_delta + time_delta
-                        else:
-                            new_time = self.start_date + day_delta
-                        
-                        self.match_report_instance.objects.create(
-                            blue_team=match[0],
-                            red_team=match[1], 
-                            week_number=week,
-                            game_number=game,
-                            match_time=new_time
-                            )
-                return 0
-            else:   # 9-week schedule with Bo2/Bo3 in single round robin
-                for round in round_robin_list:
+        if self.regular_season_schedule is 1:   #Bo1, round robin, two games a night
+            for round in round_robin_list:
+                game = 1
+                if first_game_tonight:
+                    first_game_tonight = False
+                else:
                     week += 1
-                    for match in round:
-                        game = 1
-                        day_delta = datetime.timedelta(days=7*(week-1))
+                    first_game_tonight = True
+                print('------------')
+                for match in round:
+                    #print('Match', match)
+                    day_delta = datetime.timedelta(days=7*(week-1))
+                    new_time = None
+                    if first_game_tonight == False:
+                        new_time = self.start_date + day_delta + time_delta
+                    else:
+                        new_time = self.start_date + day_delta
+                        
+                    self.match_report_instance.objects.create(
+                        blue_team=match[0],
+                        red_team=match[1], 
+                        week_number=week,
+                        game_number=game,
+                        match_time=new_time
+                        )
+        else:   # 9-week schedule with Bo2/Bo3 in single round robin
+            for round in round_robin_list:
+                week += 1
+                for match in round:
+                    game = 1
+                    day_delta = datetime.timedelta(days=7*(week-1))
+                    self.match_report_instance.objects.create(
+                        blue_team=match[0],
+                        red_team=match[1], 
+                        week_number=week,
+                        game_number=game,
+                        match_time=(self.start_date + day_delta)
+                        )
+
+                    # Do second for 2nd game in Bo2
+                    self.match_report_instance.objects.create(
+                        blue_team=match[1],
+                        red_team=match[0], 
+                        week_number=week,
+                        game_number=game+1,
+                        match_time=(self.start_date + day_delta + time_delta)
+                        )
+                    if self.regular_season_schedule is 3:   # it's Bo3
+                        # Blue/Red side evennness already done when creating the initial round-robin.
                         self.match_report_instance.objects.create(
                             blue_team=match[0],
                             red_team=match[1], 
                             week_number=week,
-                            game_number=game,
-                            match_time=(self.start_date + day_delta)
+                            game_number=game+2,
+                            match_time=(self.start_date + day_delta + time_delta*2)
                             )
-
-                        # Do second for 2nd game in Bo2
-                        self.match_report_instance.objects.create(
-                            blue_team=match[1],
-                            red_team=match[0], 
-                            week_number=week,
-                            game_number=game+1,
-                            match_time=(self.start_date + day_delta + time_delta)
-                            )
-                        if self.regular_season_schedule is 3:   # it's Bo3
-                            # Blue/Red side evennness already done when creating the initial round-robin.
-                            self.match_report_instance.objects.create(
-                                blue_team=match[0],
-                                red_team=match[1], 
-                                week_number=week,
-                                game_number=game+2,
-                                match_time=(self.start_date + day_delta + time_delta*2)
-                                )
-                return 0
-        elif self.week_length is 5: # Shortened 5-week schedule, single round robin
-            return 0
+        return 0
 
     def save(self, *args, **kwargs):
         self.get_League()
+        #self.check_league_for_teams()
         self.create_league()
         super(Start_League, self).save(*args, **kwargs)
 
@@ -773,7 +773,7 @@ class BadAccounts(models.Model):
     discord_name = models.CharField(max_length=30)
     time_added = models.DateTimeField(auto_now_add=True)
     who_added_person = models.CharField(max_length=64)
-    reason_for_ban = models.CharField(max_length=20,choices=Ban_Options)
+    reason_for_ban = models.CharField(max_length=40,choices=Ban_Options)
     supporting_documentation = models.TextField()
 
     def getOPGGLink(self):

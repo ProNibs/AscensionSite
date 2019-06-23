@@ -95,7 +95,7 @@ class LeaguePlayersAdmin(admin.ModelAdmin):
 
 class MatchReportAdmin(admin.ModelAdmin):
     list_display = ['match_time', 'game_number', 'blue_team', 'red_team']
-    ordering = ['match_time','game_number']
+    ordering = ['-match_time','game_number']
     fields = [('match_id','week_number','game_number','match_time'),
               ('did_blue_win'),
               ('blue_team','red_team'),
