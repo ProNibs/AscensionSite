@@ -80,6 +80,8 @@ class A_Player(models.Model):
     summoner_name = models.CharField(max_length=32, unique=True)
     primary_role = models.CharField(max_length=20, choices=Roles)
     secondary_role = models.CharField(max_length=20, choices=Roles)
+    previous_ign = models.CharField(max_length=32, blank=True)
+    alt_names = models.CharField(max_length=32*4, blank=True)
 
     # Stats on times played
     games_played = models.PositiveIntegerField(default=0)
@@ -411,6 +413,8 @@ class Report_Match(models.Model):
         return reverse('model-detail-view', args=[str(self.id)])
 
     def winning_team_name(self):
+        if self.match_id == 0:
+            return False
         if self.did_blue_win:
             return self.blue_team
         return self.red_team
@@ -502,17 +506,18 @@ class Baron_Match_Report(Report_Match):
 
     def save(self, *args, **kwargs):    # Get team stats here
         super(Baron_Match_Report, self).save(*args, **kwargs)
-        '''         #THIS FUCKER RUINS FOREIGN KEY SHIT UGH
-        if self.did_blue_win:
-            self.blue_team.wins += 1
-            self.red_team.losses += 1
-        else:
-            self.blue_team.losses += 1
-            self.red_team.wins += 1
+        #THIS FUCKER RUINS FOREIGN KEY SHIT UGH
+        if self.match_id is not 0:
+            if self.did_blue_win:
+                self.blue_team.wins += 1
+                self.red_team.losses += 1
+            else:
+                self.blue_team.losses += 1
+                self.red_team.wins += 1
 
-        self.blue_team.save(*args, **kwargs)
-        self.red_team.save(*args, **kwargs)
-        '''
+            self.blue_team.save(*args, **kwargs)
+            self.red_team.save(*args, **kwargs)
+        
 
     class Meta:
         unique_together = ('blue_team','red_team','match_time')
@@ -538,7 +543,6 @@ class Start_League(models.Model):
     
     # Constants used to create schedules
     teams = [0,1,2,3,4,5,6,7,8,9] 
-    # ["Team 1","Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8", "Team 9", "Team 10"]
     
     def __str__(self):
         return self.league_name
@@ -712,6 +716,10 @@ class Generic_Solo_Sign_Up(models.Model):
         db_table = "Solo Sign Up Form Template"
         abstract = True
 
+class Dragon_Team_Sign_Ups(Generic_Team_Sign_Up):
+    class Meta:
+        db_table = "Dragon Team Sign Up"
+        verbose_name_plural = "Dragon Team Sign Ups"
 
 class Dragon_Solo_Sign_Ups(Generic_Solo_Sign_Up):
     class Meta:

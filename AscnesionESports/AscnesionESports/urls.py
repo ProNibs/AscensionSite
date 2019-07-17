@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^Elder/News$', AscensionESports_Baseline.views.elder_news, name='elder_news'),
     url(r'^Baron/News$', AscensionESports_Baseline.views.baron_news, name='baron_news'),
     url(r'^Sign-Ups/Dragon$', AscensionESports_Baseline.views.dragon_league_sign_ups, name='dragon_league_sign_ups'),
+    url(r'^Sign-Ups/Dragon/Team$', AscensionESports_Baseline.views.dragon_league_team_sign_ups, name='dragon_league_team_sign_ups'),
     url(r'^Sign-Ups/Elder/Solo$', AscensionESports_Baseline.views.elder_league_solo_sign_ups, name='elder_solo_league_sign_ups'),
     url(r'^Sign-Ups/Elder/Team$', AscensionESports_Baseline.views.elder_league_team_sign_ups, name='elder_team_league_sign_ups'),
     url(r'^Sign-Ups/Baron$', AscensionESports_Baseline.views.baron_league_sign_ups, name='baron_league_sign_ups'),
@@ -58,7 +59,7 @@ urlpatterns = [
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^AEadmin', include(admin.site.urls)),
+    url(r'^AEadmin/', include(admin.site.urls)),
     url(r'^Baron League/Player/([-\w\ ]+)$', AscensionESports_Baseline.views.baron_stats, name='baron_stats'),
     url(r'^Baron League/Schedule$', AscensionESports_Baseline.views.baron_schedule, name='baron_schedule'),
     

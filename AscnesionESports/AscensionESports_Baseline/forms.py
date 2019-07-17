@@ -11,7 +11,7 @@ from captcha.fields import ReCaptchaField
 #from django.db.models import Q
 
 from .models import (
-    Dragon_Solo_Sign_Ups, Elder_Solo_Sign_Ups, Elder_Team_Sign_Ups ,Baron_Team_Sign_Ups,
+    Dragon_Solo_Sign_Ups, Dragon_Team_Sign_Ups, Elder_Solo_Sign_Ups, Elder_Team_Sign_Ups ,Baron_Team_Sign_Ups,
     Baron_League_Rosters, Baron_Players
     )
 
@@ -64,6 +64,13 @@ class Elder_League_Solo_Signup_Form(ModelForm, CheckDiscordName):
         if primary_role and secondary_role: # If both are valid as is
             if primary_role == secondary_role:
                 self.add_error('secondary_role', 'Must choose a different role for your secondary role')
+
+
+class Dragon_League_Team_Signup_Form(ModelForm, CheckDiscordName):
+    captcha = ReCaptchaField()
+    class Meta:
+        model = Dragon_Team_Sign_Ups
+        fields = '__all__'
 
 class Elder_League_Team_Signup_Form(ModelForm, CheckDiscordName):
     captcha = ReCaptchaField()

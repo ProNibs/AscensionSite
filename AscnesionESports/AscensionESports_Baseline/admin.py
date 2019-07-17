@@ -6,7 +6,7 @@ from .models import Dragon_League_Rosters, Elder_League_Rosters, Baron_League_Ro
 #from .models import Dragon_Standings, Elder_Standings, Baron_Standings
 from .models import Baron_Players
 from .models import Baron_Match_Report
-from .models import Dragon_Solo_Sign_Ups, Elder_Team_Sign_Ups, Elder_Solo_Sign_Ups, Baron_Team_Sign_Ups
+from .models import Dragon_Solo_Sign_Ups, Dragon_Team_Sign_Ups, Elder_Team_Sign_Ups, Elder_Solo_Sign_Ups, Baron_Team_Sign_Ups
 from .models import Start_League
 from .models import BadAccounts
 
@@ -66,6 +66,9 @@ class LeaguePlayersAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Player Info', {
             'fields':('summoner_name','primary_role','secondary_role')
+        }),
+        ("Previous Name and Alt Accounts listing", {
+            'fields': ('previous_ign', 'alt_names')    
         }),
         ("Global Team Stats -- Don't edit unless we fucked up the stats", {
             'fields':(('games_played','mins_played'),
@@ -131,6 +134,7 @@ admin.site.register(Baron_League_Rosters, LeagueAdmin)
 admin.site.register(Start_League)
 
 admin.site.register(Dragon_Solo_Sign_Ups, SoloSignUpsAdmin)
+admin.site.register(Dragon_Team_Sign_Ups, TeamSignUpsAdmin)
 admin.site.register(Elder_Solo_Sign_Ups, SoloSignUpsAdmin)
 admin.site.register(Elder_Team_Sign_Ups, TeamSignUpsAdmin)
 admin.site.register(Baron_Team_Sign_Ups, TeamSignUpsAdmin)

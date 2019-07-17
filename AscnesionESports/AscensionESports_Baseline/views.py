@@ -23,7 +23,8 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 
 from .forms import (
-    Dragon_League_Signup_Form, Elder_League_Solo_Signup_Form, Elder_League_Team_Signup_Form, Baron_League_Signup_Form
+    Dragon_League_Signup_Form, Dragon_League_Team_Signup_Form, 
+    Elder_League_Solo_Signup_Form, Elder_League_Team_Signup_Form, Baron_League_Signup_Form
     )
 
 from datetime import datetime
@@ -286,6 +287,34 @@ def dragon_league_sign_ups(request):
             'background': getDragonBackground(),
             'color': getDragonColor(),
             'title': 'Dragon League Sign Ups!',
+            'form': form,
+            'year': datetime.now().year,
+        })
+
+def dragon_league_team_sign_ups(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = Dragon_League_Team_Signup_Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            form.save()
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/Thanks')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = Dragon_League_Team_Signup_Form()
+
+    return render(
+        request, 
+        'AscensionESports_Baseline/sign_ups.html', 
+        {
+            'background': getDragonBackground(),
+            'color': getDragonColor(),
+            'title': 'Dragon League Team Sign Ups!',
             'form': form,
             'year': datetime.now().year,
         })

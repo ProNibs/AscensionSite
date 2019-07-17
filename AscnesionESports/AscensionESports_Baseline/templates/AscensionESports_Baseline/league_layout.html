@@ -1,9 +1,21 @@
 ﻿{% extends "AscensionESports_Baseline/layout.html" %}
 
 {% block content %}
+<head>
+    {% load static %}
+    <style>
+        a.stat_url:link, a.stat_url:visited {
+          color: white;
+        }
 
-{% load static %}
+        /* mouse over link */
+        a.stat_url:hover, a.stat_url:active {
+          color: {{ background }};
+          background-color: white;
+        }
+    </style>
 
+</head>
 <h2>{{ title }}</h2>
 <div class="Rosters">
 {% for item in query_results %}
@@ -18,29 +30,41 @@
                     <ul class="list-unstyled">
                         <div class="row">
                             <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Top_icon.png' %}" width="15" height="15" alt="Top" />
-                                <a href="{% url 'baron_stats' item.top_laner %}">{{ item.top_laner }}</a>
+                                <a href="{% url 'baron_stats' item.top_laner %}" class="stat_url">{{ item.top_laner }}</a>
                             </li>
                             <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Jungle_icon.png' %}" width="15" height="15" alt="Jgl" />
-                                <a href="{% url 'baron_stats' item.jungler %}">{{ item.jungler }}</a> 
+                                <a href="{% url 'baron_stats' item.jungler %}" class="stat_url">{{ item.jungler }}</a> 
                             </li>
                         </div>
                         <div class="row">
-                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Middle_icon.png' %}" width="15" height="15" alt="Mid" />{{ item.mid_laner }} </li>
-                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Bottom_icon.png' %}" width="15" height="15" alt="Bot" />{{ item.ad_carry }} </li>
+                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Middle_icon.png' %}" width="15" height="15" alt="Mid" />
+                                <a href="{% url 'baron_stats' item.mid_laner %}" class="stat_url">{{ item.mid_laner }}</a> 
+                            </li>
+                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Bottom_icon.png' %}" width="15" height="15" alt="Bot" />
+                                <a href="{% url 'baron_stats' item.ad_carry %}" class="stat_url">{{ item.ad_carry }}</a> 
+                            </li>
                         </div>
                         <div class="row">
-                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Support_icon.png' %}" width="15" height="15" alt="Sup" />{{ item.support }} </li>
+                            <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Support_icon.png' %}" width="15" height="15" alt="Sup" />
+                                <a href="{% url 'baron_stats' item.ad_carry %}" class="stat_url">{{ item.support }}</a> 
+                            </li>
                     
                             {% if item.substitute1 != None %}
-                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute1 }}</li>
+                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />
+                                    <a href="{% url 'baron_stats' item.substitute1 %}" class="stat_url">{{ item.substitute1 }}<br />({{ item.sub1_role }} Sub)</a>
+                                </li>
                             
                                 {% if item.substitute2 != None %}
                         </div>
                             <div class="row">
-                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute2 }}</li>
+                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />
+                                    <a href="{% url 'baron_stats' item.substitute2 %}" class="stat_url">{{ item.substitute2 }}<br />({{ item.sub2_role }} Sub)</a>
+                                </li>
                                 {% endif %}
                                 {% if item.substitute3 != None %}
-                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />{{ item.substitute3 }}</li>
+                                <li class="col-md-6 text-nowrap"><img src="{% static 'AscensionESports_Baseline/content/Fill_icon.png' %}" width="15" height="15" alt="Sub" />
+                                    <a href="{% url 'baron_stats' item.substitute3 %}" class="stat_url">{{ item.substitute3 }}<br />({{ item.sub3_role }} Sub)</a>
+                                </li>
                                 {% endif %}
                         {% endif %}
 

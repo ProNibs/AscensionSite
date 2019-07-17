@@ -12,6 +12,15 @@
     <h3>Player Name: {{ item.summoner_name }}</h3>
     <h3>Primary Role: {{ item.primary_role }}</h3>
     <h3>Secondary role: {{ item.secondary_role }}</h3>
+
+    <br />
+    {% if item.alt_names %}
+    <h4>Alternate Accounts: {{ item.alt_names }}</h4>
+    {% endif %}
+    {% if item.previous_ign %}
+    <h4>Previous Name: {{ item.previous_ign }}</h4>
+    {% endif %}
+
     <div class="Stats">
         <div class="row background spacer">
             <p class="col-md-3"><b>Games Played:</b> {{ item.games_played }}</p>

@@ -27,8 +27,16 @@
         <td class="time">{{ item.match_time }}</td>
         <td class="blue_team">{{ item.blue_team }}</td>
         <td class="red_team">{{ item.red_team }}</td>
-        <td class="winning_team">{{ item.winning_team_name }}</td>
+        {% if not item.winning_team_name %}
+            <td class="winning_team"></td>
+        {% else %}
+            <td class="winning_team">{{ item.winning_team_name }}</td>
+        {% endif %}
     </tr>
+
+    {% empty %}
+        </table>
+        <p>No schedule is available</p>
     {% endfor %}
     </table>
 </div>

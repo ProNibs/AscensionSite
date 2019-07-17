@@ -36,3 +36,9 @@ th, td {
 h2 {
     text-align: center;
 }
+
+.winning_team {
+    font-weight: 600;
+    font-style: italic;
+    font-size: 20px;
+}
