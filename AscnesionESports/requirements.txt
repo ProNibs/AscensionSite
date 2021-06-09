@@ -4,7 +4,7 @@ Django==1.11.15
 django-recaptcha==1.4.0
 dj-database-url==0.5.0
 gunicorn==19.8.1
-pip==19.1.1
+pip==19.2
 psycopg2==2.7.5
 pytz==2018.4
 setuptools==39.0.1
